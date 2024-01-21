@@ -1,0 +1,4 @@
+repository "carsim2@bkmashiro@cloud"
+  path "/"
+    br "/main"
+    co "/main"
