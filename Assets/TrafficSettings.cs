@@ -9,5 +9,5 @@ public class TrafficSettings : MonoBehaviour
   public float brakeMultiplier = 0f;
   public float steeringMultiplier = 0f;
   public float max_priority = 10f;
-
+  public float broadcast_clip_radius = 30f;
 }

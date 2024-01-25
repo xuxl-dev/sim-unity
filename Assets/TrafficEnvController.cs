@@ -198,7 +198,6 @@ public class TrafficController : MonoBehaviour
         );
     }
 
-    static float roadLength_half = 50f;
     static float car_spawn_y_offset = 0.5f;
     public List<Vec3Pair> pairs = new();
 

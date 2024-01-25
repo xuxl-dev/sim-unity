@@ -17,7 +17,7 @@ public class CarAgent : Agent
     internal Vector3 Target;
     internal TrafficController trafficController;
     BufferSensorComponent bufferSensor;
-    internal float[] broadcastBuffer = new float[20];
+    internal List<float[]> broadcasts = new List<float[]>();
 
     internal TrafficController.CarInfo carInfo;
 
@@ -36,7 +36,6 @@ public class CarAgent : Agent
     {
     }
 
-    float roadLength = 100f;
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(
@@ -49,7 +48,13 @@ public class CarAgent : Agent
         {
             if (car.isActivated)
             {
-                bufferSensor.AppendObservation(car.agent.broadcastBuffer);
+                foreach (var ob in car.agent.broadcasts)
+                {
+                    if (Vector3.Distance(transform.position, car.agent.transform.position) < trafficSettings.broadcast_clip_radius)
+                    {
+                        bufferSensor.AppendObservation(ob);
+                    }
+                }
             }
         }
     }
@@ -99,27 +104,23 @@ public class CarAgent : Agent
             rBody.angularVelocity = rBody.angularVelocity.normalized * trafficSettings.maxAngularVelocity;
         }
 
-        float[] broadcast = new float[13 + 7];
-        // 0~4: info about this car
-        broadcast[0] = throttle;
-        broadcast[1] = steering;
-        broadcast[2] = brake;
-        broadcast[3] = carInfo.priority / trafficSettings.max_priority;
-        broadcast[4] = carInfo.priority / trafficSettings.max_priority;
-        // 5~6: info about the target
-        broadcast[5] = (Target - transform.position).x / roadLength;
-        broadcast[6] = (Target - transform.position).z / roadLength;
-        // 7~20: reserved info copied from actionBuffers[3..15]
-        for (int i = 0; i < 13; i++)
-        {
-            broadcast[7 + i] = actionBuffers.ContinuousActions[i + 3];
-        }
+        var selfInfo = new BroadcastInfoBuilder(16)
+            .AsType(BroadcastInfoBuilder.BroadcastInfoBuilderType.VehicleObservation)
+            .Add(throttle)
+            .Add(steering)
+            .Add(transform.position.x)
+            .Add(transform.position.z)
+            .Add(transform.rotation.eulerAngles.y)
+            .Add(Target.x)
+            .Add(Target.z);
 
-        broadcastBuffer = broadcast;
+        var events = new BroadcastInfoBuilder(16)
+            .AsType(BroadcastInfoBuilder.BroadcastInfoBuilderType.BroadcastEvents)
+            .Add(brake);
+
+        broadcasts.Add(selfInfo.Build());
+        broadcasts.Add(events.Build());
     }
-
-    // float max_speed_reward = 0.3f;
-    // float cur_speed_reward = 0.3f;
 
     public override void Heuristic(in ActionBuffers actionBuffers)
     {
