@@ -6,10 +6,9 @@ using Newtonsoft.Json.Linq;
 using SocketIOClient.Newtonsoft.Json;
 using System.Text.Json;
 
-public class Sio
+public class Sio : MonoBehaviour
 {
-    private Sio()
-    {
+    private void Awake() {
         Init();
     }
     private static SocketIOUnity socket;
@@ -27,7 +26,7 @@ public class Sio
     // Start is called before the first frame update
     static void Init()
     {
-        var uri = new Uri("http://localhost:3000");
+        var uri = new Uri("http://127.0.0.1:3666");
         socket = new SocketIOUnity(uri, new SocketIOOptions
         {
             Query = new Dictionary<string, string>
@@ -35,7 +34,9 @@ public class Sio
                     {"token", "UNITY" }
                 }
             ,
-            Transport = SocketIOClient.Transport.TransportProtocol.WebSocket
+            Transport = SocketIOClient.Transport.TransportProtocol.WebSocket,
+            ReconnectionDelayMax = 5000,
+            ReconnectionDelay = 1000,
         })
         {
             JsonSerializer = new NewtonsoftJsonSerializer()
@@ -57,12 +58,21 @@ public class Sio
 
         Debug.Log("Connecting...");
         socket.Connect();
-        Debug.Log("Connected" + socket.Connected);
+        socket.OnConnected += (sender, e) =>
+        {
+            Debug.Log("socket.OnConnected");
+        };
 
         socket.OnAnyInUnityThread((name, response) =>
         {
             Debug.Log($"OnAnyInUnityThread: {name} ");
         });
 
+    }
+
+    // when close the game, disconnect the socket
+    private void OnApplicationQuit()
+    {
+        socket.Disconnect();
     }
 }

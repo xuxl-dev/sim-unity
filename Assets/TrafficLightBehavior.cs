@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,7 +23,7 @@ public class TrafficLightBehavior : MonoBehaviour
 
     public List<TrafficLightState> states = new();
 
-    int seconds_left = 0;
+    int milliseconds_left = 0;
     string current_color = "red";
     string previous_color = "red";
     
@@ -36,13 +37,14 @@ public class TrafficLightBehavior : MonoBehaviour
 
     }
 
-    private IEnumerator WaitForSeconds(int seconds)
+    int resolution_ms = 10;
+    private IEnumerator WaitForMilliseconds(int ms)
     {
-        seconds_left = seconds;
-        while (seconds_left > 0)
+        milliseconds_left = ms;
+        while (milliseconds_left > 0)
         {
-            yield return new WaitForSeconds(1);
-            seconds_left--;
+            yield return new WaitForSeconds(resolution_ms / 1000f);
+            milliseconds_left -= resolution_ms;
             Sync();
         }
     }
@@ -78,7 +80,7 @@ public class TrafficLightBehavior : MonoBehaviour
                 }
                 current_color = state.color;
                 // yield return new WaitForSeconds(state.time);
-                yield return StartCoroutine(WaitForSeconds(state.time));
+                yield return StartCoroutine(WaitForMilliseconds(state.time * 1000));
             }
             if (!DoRepeat)
             {
@@ -108,7 +110,8 @@ public class TrafficLightBehavior : MonoBehaviour
                 {
                     previous = previous_color,
                     color = current_color,
-                    time = seconds_left
+                    time = milliseconds_left,
+                    abs_time = DateTime.Now.ToBinary()
                 }
             });
         }

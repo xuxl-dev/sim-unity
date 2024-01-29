@@ -9,6 +9,7 @@ TagManager:
   - car
   - target
   - crossing
+  - traffic_light
   layers:
   - Default
   - TransparentFX
