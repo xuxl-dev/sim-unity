@@ -88,23 +88,13 @@ public class TrafficLightBehavior : MonoBehaviour
             }
         }
     }
-    // type TrafficLightEvent = {
-    //   type: 'event';
-    //   event: 'trafficlight';
-    //   payload: {
-    //     previous: 'red' | 'yellow' | 'green';
-    //     color: 'red' | 'yellow' | 'green';
-    //     time: number;
-    //   }
-    // }
+
     internal void Sync()
     {
         foreach (var car in cars)
         {
-            Sio.Instance.Emit("trafficlight", new
+            Sio.Emit("trafficlight", new
             {
-                id = car.name,
-                type = "event",
                 @event = "trafficlight",
                 payload = new
                 {

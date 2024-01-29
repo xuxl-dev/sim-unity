@@ -8,6 +8,7 @@ using UnityEngine.AI;
 using UnityEditor;
 using Unity.Sentis.Layers;
 using System;
+using Grpc.Core;
 
 
 public class CarAgent : Agent
@@ -121,40 +122,23 @@ public class CarAgent : Agent
 
         broadcasts.Add(selfInfo.Build());
         broadcasts.Add(events.Build());
-        // type BrakeEvent = {
-        //   type: 'event';
-        //   event: 'brake';
-        //   payload: boolean // true: brake, false: release
-        // }
 
-        // type SwitchEvent = {
-        //   type: 'event';
-        //   event: 'switch';
-        //   payload: {
-        //     previous: string; // 挡位
-        //     next: string; // 挡位
-        //   }
-        // }
-
-        // type TrafficLightEvent = {
-        //   type: 'event';
-        //   event: 'trafficlight';
-        //   payload: {
-        //     previous: 'red' | 'yellow' | 'green';
-        //     color: 'red' | 'yellow' | 'green';
-        //     time: number;
-        //   }
-        // }
-
-        if (step++ % 1000 == 0)
+        Sio.Emit("brake", new 
         {
-            Sio.Instance.Emit("brake", new
+            @event = "brake",
+            payload = brake == 1
+        });
+
+        Sio.Emit("status", new
+        {
+            @event = "status",
+            payload = new
             {
-                type = "event",
-                @event = "broadcast",
-                payload = brake
-            });
-        }
+                speed = rBody.velocity.magnitude,
+                position = rBody.position.ToObject(),
+                rotation = rBody.rotation.ToObject(),
+            }
+        });
     }
     int step = 0;
 
@@ -166,7 +150,6 @@ public class CarAgent : Agent
 
         float acceleration = actionBuffers.ContinuousActions[0];
         float steering = actionBuffers.ContinuousActions[1];
-
 
         acceleration = Mathf.Clamp(acceleration, -1f, 1f);
         steering = Mathf.Clamp(steering, -1f, 1f);
@@ -209,7 +192,7 @@ public class CarAgent : Agent
             if (detector.TryGetComponent<TrafficLightBehavior>(out var trafficLight))
             {
                 trafficLight.cars.Add(this);
-                Sio.Instance.Emit("trafficlight-detector", new
+                Sio.Emit("trafficlight-detector", new
                 {
                     type = "event",
                     @event = "trafficlight-detector",
@@ -228,7 +211,7 @@ public class CarAgent : Agent
             if (detector.TryGetComponent<TrafficLightBehavior>(out var trafficLight))
             {
                 trafficLight.cars.Remove(this);
-                Sio.Instance.Emit("trafficlight-detector", new
+                Sio.Emit("trafficlight-detector", new
                 {
                     type = "event",
                     @event = "trafficlight-detector",

@@ -1,3 +1,5 @@
+#define SIO_DEBUG
+
 using System;
 using System.Collections.Generic;
 using SocketIOClient;
@@ -5,14 +7,20 @@ using UnityEngine;
 using Newtonsoft.Json.Linq;
 using SocketIOClient.Newtonsoft.Json;
 using System.Text.Json;
+using System.Diagnostics;
+using Dbg = UnityEngine.Debug;
 
 public class Sio : MonoBehaviour
 {
-    private void Awake() {
+    public static string MyId = "UNITY";
+    private void Awake()
+    {
         Init();
     }
     private static SocketIOUnity socket;
-    public static SocketIOUnity Instance
+
+    // only not in training mode
+    private static SocketIOUnity Instance
     {
         get
         {
@@ -44,28 +52,28 @@ public class Sio : MonoBehaviour
 
         socket.OnConnected += (sender, e) =>
         {
-            Debug.Log("socket.OnConnected");
+            Dbg.Log("socket.OnConnected");
         };
         socket.OnDisconnected += (sender, e) =>
          {
-             Debug.Log("disconnect: " + e);
+             Dbg.Log("disconnect: " + e);
          };
         socket.OnReconnectAttempt += (sender, e) =>
         {
-            Debug.Log($"{DateTime.Now} Reconnecting: attempt = {e}");
+            Dbg.Log($"{DateTime.Now} Reconnecting: attempt = {e}");
         };
 
 
-        Debug.Log("Connecting...");
+        Dbg.Log("Connecting...");
         socket.Connect();
         socket.OnConnected += (sender, e) =>
         {
-            Debug.Log("socket.OnConnected");
+            Dbg.Log("socket.OnConnected");
         };
 
         socket.OnAnyInUnityThread((name, response) =>
         {
-            Debug.Log($"OnAnyInUnityThread: {name} ");
+            Dbg.Log($"OnAnyInUnityThread: {name} ");
         });
 
     }
@@ -74,5 +82,36 @@ public class Sio : MonoBehaviour
     private void OnApplicationQuit()
     {
         socket.Disconnect();
+    }
+
+    [Conditional("SIO_DEBUG")]
+    public static void Emit(string eventName, object data)
+    {
+        var dict = MakeDict(data);
+        dict["id"] = MyId;
+        Instance.Emit(eventName, dict);
+    }
+
+    public static Dictionary<string, object> MakeDict(object content)
+    {
+        var props = content.GetType().GetProperties();
+        var pairDictionary = new Dictionary<string, object>();
+        foreach (var prop in props)
+        {
+            var value = prop.GetValue(content);
+            if (value == null)
+            {
+                continue;
+            }
+            if (value.GetType().IsPrimitive || value.GetType() == typeof(string))
+            {
+                pairDictionary.Add(prop.Name, value);
+            }
+            else
+            {
+                pairDictionary.Add(prop.Name, MakeDict(value));
+            }
+        }
+        return pairDictionary;
     }
 }
