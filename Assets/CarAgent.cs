@@ -12,6 +12,7 @@ using System;
 
 public class CarAgent : Agent
 {
+    public string Name = "Car#0";
     private Rigidbody rBody;
     private TrafficSettings trafficSettings;
     internal Vector3 Target;
@@ -120,7 +121,42 @@ public class CarAgent : Agent
 
         broadcasts.Add(selfInfo.Build());
         broadcasts.Add(events.Build());
+        // type BrakeEvent = {
+        //   type: 'event';
+        //   event: 'brake';
+        //   payload: boolean // true: brake, false: release
+        // }
+
+        // type SwitchEvent = {
+        //   type: 'event';
+        //   event: 'switch';
+        //   payload: {
+        //     previous: string; // 挡位
+        //     next: string; // 挡位
+        //   }
+        // }
+
+        // type TrafficLightEvent = {
+        //   type: 'event';
+        //   event: 'trafficlight';
+        //   payload: {
+        //     previous: 'red' | 'yellow' | 'green';
+        //     color: 'red' | 'yellow' | 'green';
+        //     time: number;
+        //   }
+        // }
+
+        if (step++ % 1000 == 0)
+        {
+            Sio.Instance.Emit("brake", new
+            {
+                type = "event",
+                @event = "broadcast",
+                payload = brake
+            });
+        }
     }
+    int step = 0;
 
     public override void Heuristic(in ActionBuffers actionBuffers)
     {
@@ -168,36 +204,40 @@ public class CarAgent : Agent
 
     internal void OnDetectorEnter(DetectorBehavior detector)
     {
-        if (detector.next != null)
+        if (detector.CompareTag(Tokens.TRAFFIC_LIGHT))
         {
-            previousLane = currentLane;
-            currentLane = detector.lane;
-
-            if (previousLane != null)
+            if (detector.TryGetComponent<TrafficLightBehavior>(out var trafficLight))
             {
-                // check if a valid turn
-                if (detector.next.Contains(previousLane))
+                trafficLight.cars.Add(this);
+                Sio.Instance.Emit("trafficlight-detector", new
                 {
-                    // valid turn
-                    Debug.Log("Valid turn" + previousLane + " to " + currentLane);
-                }
-                else
-                {
-                    // invalid turn
-                    Debug.Log("Invalid turn from " + previousLane + " to " + currentLane);
-                }
+                    type = "event",
+                    @event = "trafficlight-detector",
+                    payload = new
+                    {
+                        state = "entering",
+                    }
+                });
             }
         }
-        else
+    }
+    internal void OnDetectorExit(DetectorBehavior detector)
+    {
+        if (detector.CompareTag(Tokens.TRAFFIC_LIGHT))
         {
-            Debug.Log("Detector has no intersection lane" + detector);
+            if (detector.TryGetComponent<TrafficLightBehavior>(out var trafficLight))
+            {
+                trafficLight.cars.Remove(this);
+                Sio.Instance.Emit("trafficlight-detector", new
+                {
+                    type = "event",
+                    @event = "trafficlight-detector",
+                    payload = new
+                    {
+                        state = "leaving",
+                    }
+                });
+            }
         }
     }
-
-    internal void OnDetectorExit(DetectorBehavior detectorBehavior)
-    {
-
-    }
-
-
 }

@@ -3,12 +3,6 @@ using UnityEngine;
 
 public class DetectorBehavior : MonoBehaviour
 {
-  // internal IntersectionLane intersectionLane;
-  public string lane = null;
-  public List<string> next = new();
-  public float test = 0f;
-  
-
   private void OnTriggerEnter(Collider other)
   {
     if (other.gameObject.CompareTag(Tokens.CAR))
@@ -30,4 +24,13 @@ public class DetectorBehavior : MonoBehaviour
       }
     }
   }
+
+  // called when anything enters the detector
+  // public List<DetectorEnterDelegate> enters = new();
+  // public List<DetectorEnterDelegate> exits = new();
+
+  // DetectorEnterDelegate enter;
 }
+
+// [System.Serializable]
+// public delegate void DetectorEnterDelegate(DetectorBehavior detector, Collider other);

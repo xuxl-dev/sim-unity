@@ -8,6 +8,7 @@ public class Clicker : MonoBehaviour
     void Start()
     {
         m_Camera = Camera.main;
+        
     }
 
     Camera m_Camera;

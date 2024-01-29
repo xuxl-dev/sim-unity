@@ -450,6 +450,7 @@ public static class Tokens
     public static string DETECTOR = "detector";
     public static string ROAD = "road";
     public static string CAR = "car";
+    public static string TRAFFIC_LIGHT = "traffic_light";
 }
 
 public class TrafficRouteBehavior : MonoBehaviour
@@ -616,10 +617,10 @@ public class TrafficRouteBehavior : MonoBehaviour
                 collider.isTrigger = true;
                 collider.tag = Tokens.DETECTOR;
                 // detector has a DetectorBehavior component
-                var detectorBehavior = detector.AddComponent<DetectorBehavior>();
-                detectorBehavior.lane = intersectionLane.ToString();
-                detectorBehavior.next = intersectionLane.next.Select(x => x.ToString()).ToList();
-                detectorBehavior.test = 1f;
+                // var detectorBehavior = detector.AddComponent<DetectorBehavior>();
+                // detectorBehavior.lane = intersectionLane.ToString();
+                // detectorBehavior.next = intersectionLane.next.Select(x => x.ToString()).ToList();
+                // detectorBehavior.test = 1f;
 
                 _detectors.Add(detector);
             }
