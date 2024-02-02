@@ -1,11 +1,11 @@
 using System;
 using System.Linq;
+using Cinemachine;
 using TMPro;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
-using UnityEngine.Diagnostics;
 
 public class PhyCar : Agent
 {
@@ -13,21 +13,25 @@ public class PhyCar : Agent
     TextMeshPro text;
     Vector3 CarCenterShift;
     TrafficLightBehaviorPhy TrafficLight;
+    Rigidbody rb;
+    internal string cam_id;
 
     void Start()
     {
         controller = GetComponent<PhyCarController>();
         text = transform.Find("text").GetChild(0).GetComponent<TextMeshPro>();
         CarCenterShift = CUtils.GetBounds(transform.Find("body").gameObject).center - this.transform.position;
+        rb = GetComponent<Rigidbody>();
+        cam_id = Zoomer.Instance.Register(transform.Find("vc").GetComponent<CinemachineVirtualCamera>());
     }
 
     void Update()
     {
-        text.text = $"speed: {controller.motor:0.00} km/h\n" +
+        text.text = $"motor: {controller.motor:0.00} (v: {this.rb.velocity})\n" +
             $"steering: {controller.steering:0.00}\n" +
             $"brake: {controller.brake:0.00}\n" +
             $"offset: {GetOffsetToCenterLine():0.00}\n" +
-            $"traffic light: {TrafficLight?.current_color ?? "[UNK]"}";
+            $"traffic light: {(TrafficLight != null ? TrafficLight.current_color : null) ?? "[UNK]"}";
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -140,8 +144,6 @@ public class PhyCar : Agent
             gameObject.SetActive(false);
             other.gameObject.SetActive(false);
         }
-
-
     }
 
     private void OnCollisionExit(Collision other)
@@ -171,5 +173,9 @@ public class PhyCar : Agent
                 trafficLight.cars.Remove(this);
             }
         }
+    }
+
+    private void OnMouseDown() {
+        Zoomer.Instance.Zoom(cam_id);
     }
 }
