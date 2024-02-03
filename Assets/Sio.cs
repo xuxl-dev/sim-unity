@@ -20,7 +20,7 @@ public class Sio : MonoBehaviour
     private static SocketIOUnity socket;
 
     // only not in training mode
-    private static SocketIOUnity Instance
+    public static SocketIOUnity Instance
     {
         get
         {
@@ -45,6 +45,7 @@ public class Sio : MonoBehaviour
             Transport = SocketIOClient.Transport.TransportProtocol.WebSocket,
             ReconnectionDelayMax = 5000,
             ReconnectionDelay = 1000,
+            ReconnectionAttempts = 5
         })
         {
             JsonSerializer = new NewtonsoftJsonSerializer()
@@ -71,6 +72,7 @@ public class Sio : MonoBehaviour
             Dbg.Log("socket.OnConnected");
         };
 
+      
         socket.OnAnyInUnityThread((name, response) =>
         {
             Dbg.Log($"OnAnyInUnityThread: {name} ");
