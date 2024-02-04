@@ -1,15 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using UnityEngine;
 
-public class Zoomer
+public class Zoomer : MonoBehaviour
 {
-    public static readonly Zoomer _instance = new();
+    private static Zoomer instance;
     public static Zoomer Instance
     {
         get
         {
-            return _instance;
+            if (instance == null)
+            {
+                instance = new GameObject("Zoomer").AddComponent<Zoomer>();
+            }
+            return instance;
         }
     }
     private Zoomer() { }

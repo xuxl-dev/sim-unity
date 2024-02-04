@@ -175,7 +175,7 @@ public class PhyCar : Agent
         }
     }
 
-    private void OnMouseDown() {
+    public void OnMouseDown() {
         Zoomer.Instance.Zoom(cam_id);
     }
 }

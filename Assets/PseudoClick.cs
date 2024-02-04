@@ -9,33 +9,39 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class PseudoClick : MonoBehaviour
 {
-    public static PseudoClick Instance { get; private set; }
-    private void Awake()
+    private static PseudoClick instance;
+
+    public static PseudoClick Instance
     {
-        if (Instance == null)
+        get
         {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
+            if (instance == null)
+            {
+                instance = new GameObject("PseudoClick").AddComponent<PseudoClick>();
+            }
+            return instance;
         }
     }
     public void ClickAt(float x, float y)
     {
         // simulate a click on the screen
         Vector2 clickPosition = new(x, y);
-        PointerEventData pointerEventData = new(EventSystem.current)
+        PointerEventData pointerData = new(EventSystem.current)
         {
-            position = clickPosition,
-
+            position = clickPosition
         };
         List<RaycastResult> results = new();
-        EventSystem.current.RaycastAll(pointerEventData, results);
+        EventSystem.current.RaycastAll(pointerData, results);
+        // filter out non car
+        // results.RemoveAll(r => !r.gameObject.CompareTag("car"));
+
         if (results.Count > 0)
         {
-            ExecuteEvents.Execute(results[0].gameObject, pointerEventData, ExecuteEvents.pointerClickHandler);
-            Debug.Log("Clicked on " + results[0].gameObject.name);
+            Debug.Log("clicking on " + results[0].gameObject.name);
+            // send a click event to object
+            //FIXME does not work
+            ExecuteEvents.Execute(results[0].gameObject, pointerData, ExecuteEvents.pointerClickHandler);
+
         }
     }
     class Data

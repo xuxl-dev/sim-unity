@@ -785,6 +785,7 @@ GameObject:
   - component: {fileID: 1181510784}
   - component: {fileID: 1181510783}
   - component: {fileID: 1181510787}
+  - component: {fileID: 1181510788}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -800,8 +801,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181510772}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.31052056, y: -0.04021018, z: 0.013148443, w: 0.94962484}
-  m_LocalPosition: {x: 0.6608635, y: 19.761143, z: -91.504105}
+  m_LocalRotation: {x: -0.39777148, y: -0.58681864, z: 0.40353033, w: -0.5784332}
+  m_LocalPosition: {x: -61.339493, y: 109.57148, z: 7.1464124}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -933,7 +934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   local: 0
-  label: 
+  label: input
   m_Actions: {fileID: -944628639613478452, guid: 3529cd603d446d2428f4a16336a4c4ab, type: 3}
   m_ActionEvents:
   - m_PersistentCalls:
@@ -952,6 +953,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: ba01328e-c65a-4e30-817e-c9df8885c20d
     m_ActionName: New action map/Look[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1181510787}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1f81b570-34da-4145-b99d-288604add17f
+    m_ActionName: New action map/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1181510787}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: Move
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 097267d6-12e9-4081-8f89-5532f76b2f66
+    m_ActionName: New action map/Move[/Mouse/position]
   m_DefaultActionMap: New action map
 --- !u!114 &1181510784
 MonoBehaviour:
@@ -965,9 +998,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bcc82901c3f48a88d3408251afa3365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TextureSize: {x: 1920, y: 1200}
+  m_TextureSize: {x: 1280, y: 720}
   m_Source: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1181510777}
   m_Texture: {fileID: 0}
   m_WebCamDeviceIndex: 0
   m_Depth: 16
@@ -1008,10 +1041,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 045786cf504bd7347842d6948241cbd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_useDefault: 1
-  signalingSettingsObject: {fileID: 0}
+  m_useDefault: 0
+  signalingSettingsObject: {fileID: 11400000, guid: 1c3fb222e4dd62f489e306b45ff8ac55, type: 2}
   signalingSettings:
-    rid: 3047060175219851264
+    rid: 3047060178602557440
   handlers:
   - {fileID: 1181510785}
   runOnAwake: 1
@@ -1019,10 +1052,10 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 3047060175219851264
+    - rid: 3047060178602557440
       type: {class: WebSocketSignalingSettings, ns: Unity.RenderStreaming, asm: Unity.RenderStreaming}
       data:
-        m_url: ws://127.0.0.1
+        m_url: ws://127.0.0.1:8888
         m_iceServers:
         - m_urls:
           - stun:stun.l.google.com:19302
@@ -1041,6 +1074,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c305fc88209e289469ebc09eb013557f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1181510788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181510772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 1181510772}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
 --- !u!1 &1214474677
 GameObject:
   m_ObjectHideFlags: 0
@@ -1752,6 +1800,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CarPhysical (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 175465916069890304, guid: 6f6ced598242bcd4bb8e8e3b1d3600b1, type: 3}
+      propertyPath: m_TagString
+      value: car
+      objectReference: {fileID: 0}
     - target: {fileID: 246432376699082876, guid: 6f6ced598242bcd4bb8e8e3b1d3600b1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -65.5
@@ -1937,6 +1989,89 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug_drawing_y: 3.3
   road_y: 0
+--- !u!1 &1955673985
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1955673987}
+  - component: {fileID: 1955673986}
+  m_Layer: 0
+  m_Name: viewer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!20 &1955673986
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955673985}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 1
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &1955673987
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955673985}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.4512066, y: 0.54117244, z: -0.43636104, w: 0.5595839}
+  m_LocalPosition: {x: -36.8, y: 127.8, z: -1.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 77.76, y: 88.083, z: 0}
 --- !u!1 &2003247593
 GameObject:
   m_ObjectHideFlags: 0
@@ -2242,3 +2377,4 @@ SceneRoots:
   - {fileID: 1181510775}
   - {fileID: 1448276002}
   - {fileID: 4330297169730325548}
+  - {fileID: 1955673987}
