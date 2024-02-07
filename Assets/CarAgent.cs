@@ -13,13 +13,13 @@ using Grpc.Core;
 
 public class CarAgent : Agent
 {
-    public string Name = "Car#0";
+
     private Rigidbody rBody;
     private TrafficSettings trafficSettings;
     internal Vector3 Target;
     internal TrafficController trafficController;
     BufferSensorComponent bufferSensor;
-    internal List<float[]> broadcasts = new List<float[]>();
+    internal List<float[]> broadcasts = new();
 
     internal TrafficController.CarInfo carInfo;
 
@@ -29,6 +29,8 @@ public class CarAgent : Agent
         rBody = GetComponent<Rigidbody>();
         trafficSettings = transform.parent.parent.GetComponent<TrafficSettings>();
     }
+
+
 
     void Start()
     {
@@ -123,7 +125,7 @@ public class CarAgent : Agent
         broadcasts.Add(selfInfo.Build());
         broadcasts.Add(events.Build());
 
-        Sio.Emit("brake", new 
+        Sio.Emit("brake", new
         {
             @event = "brake",
             payload = brake == 1

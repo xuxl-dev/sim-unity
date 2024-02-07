@@ -72,7 +72,7 @@ public class Sio : MonoBehaviour
             Dbg.Log("socket.OnConnected");
         };
 
-      
+
         socket.OnAnyInUnityThread((name, response) =>
         {
             Dbg.Log($"OnAnyInUnityThread: {name} ");
@@ -90,8 +90,14 @@ public class Sio : MonoBehaviour
     public static void Emit(string eventName, object data)
     {
         var dict = MakeDict(data);
-        dict["id"] = MyId;
+        // dict["id"] = MyId;
         Instance.Emit(eventName, dict);
+    }
+
+    [Conditional("SIO_DEBUG")]
+    public static void EmitDict(string eventName, Dictionary<string, object> data)
+    {
+        Instance.Emit(eventName, data);
     }
 
     public static Dictionary<string, object> MakeDict(object content)

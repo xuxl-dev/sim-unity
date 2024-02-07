@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
 using TMPro;
@@ -9,20 +10,61 @@ using UnityEngine;
 
 public class PhyCar : Agent
 {
+    static int _id = 0;
+    public int id = _id++;
+    public string Name => $"CarAgent-{id}";
     PhyCarController controller;
     TextMeshPro text;
     Vector3 CarCenterShift;
     TrafficLightBehaviorPhy TrafficLight;
     Rigidbody rb;
     internal string cam_id;
+    static Dictionary<string, PhyCar> cars = new();
+    static string focused_car = "none";
+    static float focus_distance = 10f;
 
     void Start()
     {
+        cars[Name] = this;
         controller = GetComponent<PhyCarController>();
         text = transform.Find("text").GetChild(0).GetComponent<TextMeshPro>();
         CarCenterShift = CUtils.GetBounds(transform.Find("body").gameObject).center - this.transform.position;
         rb = GetComponent<Rigidbody>();
         cam_id = Zoomer.Instance.Register(transform.Find("vc").GetComponent<CinemachineVirtualCamera>());
+
+
+        PhyEnvReporter.Instance.Subscribe(new PhyEnvReporter.SubscriberConfig
+        {
+            @event = "status",
+            data = GetBriefFunc(),
+            id = Name,
+        });
+
+        PhyEnvReporter.Instance.Subscribe(new PhyEnvReporter.SubscriberConfig
+        {
+            @event = "focused-nearby-cars",
+            data = GetBriefFunc(),
+            id = Name,
+            filter = (_) =>
+            {
+                return Vector3.Distance(transform.position, cars[focused_car].transform.position) < focus_distance;
+            }
+        });
+
+        Func<object> GetBriefFunc()
+        {
+            return () => new
+            {
+                motor = controller.motor,
+                steering = controller.steering,
+                brake = controller.brake,
+                speed = rb.velocity.ToObject(),
+                angular_speed = rb.angularVelocity.ToObject(),
+                position = transform.position.ToObject(),
+                rotation = transform.rotation.ToObject(),
+                offset = GetOffsetToCenterLine(),
+            };
+        }
     }
 
     void Update()
@@ -175,7 +217,8 @@ public class PhyCar : Agent
         }
     }
 
-    public void OnMouseDown() {
+    public void OnMouseDown()
+    {
         Zoomer.Instance.Zoom(cam_id);
     }
 }
