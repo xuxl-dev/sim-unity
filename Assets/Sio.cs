@@ -9,6 +9,7 @@ using SocketIOClient.Newtonsoft.Json;
 using System.Text.Json;
 using System.Diagnostics;
 using Dbg = UnityEngine.Debug;
+using Unity.VisualScripting;
 
 public class Sio : MonoBehaviour
 {
@@ -97,6 +98,10 @@ public class Sio : MonoBehaviour
     [Conditional("SIO_DEBUG")]
     public static void EmitDict(string eventName, Dictionary<string, object> data)
     {
+        if (socket == null || !socket.Connected) {
+            Dbg.Log("socket not connected");
+            return;
+        }
         Instance.Emit(eventName, data);
     }
 

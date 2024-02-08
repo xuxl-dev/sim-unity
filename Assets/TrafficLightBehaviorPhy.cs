@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class TrafficLightBehaviorPhy : MonoBehaviour
 {
+    static int _id = 0;
+    public int id = _id++;
+    public string Name => $"TrafficLight-{id}";
     public Material red;
     public Material yellow;
     public Material green;
     public Material off;
     public Transform[] lights;
-    public List<PhyCar> cars = new();
+    private List<PhyCar> cars = new();
 
     [System.Serializable]
     public class TrafficLightState
@@ -26,15 +29,44 @@ public class TrafficLightBehaviorPhy : MonoBehaviour
     int milliseconds_left = 0;
     internal string current_color = "red";
     internal string previous_color = "red";
-    
+
+    private void Awake()
+    {
+        this.Start();
+    }
+
     void Start()
     {
         StartCoroutine(BeginTrafficLight());
+        PhyEnvReporter.Instance.Subscribe(new PhyEnvReporter.SubscriberConfig
+        {
+            @event = "trafficlight-status",
+            data = () => new
+            {
+                previous = previous_color,
+                color = current_color,
+                time = milliseconds_left,
+                abs_time = DateTime.Now.ToBinary()
+            },
+            id = Name,
+        });
     }
 
     void Update()
     {
 
+    }
+
+    public void CarEnter(PhyCar car)
+    {
+        cars.Add(car);
+        PhyEnvReporter.Instance.Push("trafficlight-detector", new { state = "entering" }, car.Name);
+    }
+
+    public void CarExit(PhyCar car)
+    {
+        cars.Remove(car);
+        PhyEnvReporter.Instance.Push("trafficlight-detector", new { state = "leaving" }, car.Name);
     }
 
     int resolution_ms = 10;
@@ -91,19 +123,15 @@ public class TrafficLightBehaviorPhy : MonoBehaviour
 
     internal void Sync()
     {
-        // foreach (var car in cars)
-        // {
-        //     Sio.Emit("trafficlight", new
-        //     {
-        //         @event = "trafficlight",
-        //         payload = new
-        //         {
-        //             previous = previous_color,
-        //             color = current_color,
-        //             time = milliseconds_left,
-        //             abs_time = DateTime.Now.ToBinary()
-        //         }
-        //     });
-        // }
+        foreach (var car in cars)
+        {
+            PhyEnvReporter.Instance.Push("trafficlight", new
+            {
+                previous = previous_color,
+                color = current_color,
+                time = milliseconds_left,
+                abs_time = DateTime.Now.ToBinary()
+            }, car.Name);
+        }
     }
 }

@@ -10,8 +10,10 @@ using UnityEngine;
 
 public class PhyCar : Agent
 {
+    [NonSerialized]
     static int _id = 0;
-    public int id = _id++;
+    [NonSerialized]
+    public int id = -1;
     public string Name => $"CarAgent-{id}";
     PhyCarController controller;
     TextMeshPro text;
@@ -25,6 +27,8 @@ public class PhyCar : Agent
 
     void Start()
     {
+        id = _id++;
+        Debug.Log("PhyCar start of id: " + id);
         cars[Name] = this;
         controller = GetComponent<PhyCarController>();
         text = transform.Find("text").GetChild(0).GetComponent<TextMeshPro>();
@@ -47,7 +51,9 @@ public class PhyCar : Agent
             id = Name,
             filter = (_) =>
             {
-                return Vector3.Distance(transform.position, cars[focused_car].transform.position) < focus_distance;
+                return 
+                    focused_car != "none" &&
+                    Vector3.Distance(transform.position, cars[focused_car].transform.position) < focus_distance;
             }
         });
 
@@ -58,7 +64,8 @@ public class PhyCar : Agent
                 motor = controller.motor,
                 steering = controller.steering,
                 brake = controller.brake,
-                speed = rb.velocity.ToObject(),
+                speed = rb.velocity.magnitude,
+                speed3 = rb.velocity.ToObject(),
                 angular_speed = rb.angularVelocity.ToObject(),
                 position = transform.position.ToObject(),
                 rotation = transform.rotation.ToObject(),
@@ -200,7 +207,7 @@ public class PhyCar : Agent
             if (other.gameObject.TryGetComponent<TrafficLightBehaviorPhy>(out var trafficLight))
             {
                 TrafficLight = trafficLight;
-                trafficLight.cars.Add(this);
+                trafficLight.CarEnter(this);
             }
         }
     }
@@ -212,7 +219,7 @@ public class PhyCar : Agent
             if (other.gameObject.TryGetComponent<TrafficLightBehaviorPhy>(out var trafficLight))
             {
                 TrafficLight = null;
-                trafficLight.cars.Remove(this);
+                trafficLight.CarExit(this);
             }
         }
     }
@@ -220,5 +227,6 @@ public class PhyCar : Agent
     public void OnMouseDown()
     {
         Zoomer.Instance.Zoom(cam_id);
+        PhyEnvReporter.Instance.Push("focused-car", new { obj = Name });
     }
 }

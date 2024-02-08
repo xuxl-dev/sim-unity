@@ -35,7 +35,10 @@ public class PhyEnvReporter : MonoBehaviour
         {
           continue;
         }
-        var dict = Sio.MakeDict(data);
+        var dict = Sio.MakeDict(new {
+          payload = data,
+          @event = subscriber.@event,
+        });
         if (subscriber.id != null) //todo refactor
         {
           dict["id"] = subscriber.id;
@@ -51,6 +54,21 @@ public class PhyEnvReporter : MonoBehaviour
   {
     subscribers.Add(cfg);
   }
+
+#nullable enable
+  public void Push(string @event, object data, string? id = null)
+  {
+    var dict = Sio.MakeDict(new {
+      payload = data,
+      @event = @event,
+    });
+    if (id != null) //todo refactor
+    {
+      dict["id"] = id;
+    }
+    Sio.EmitDict(@event, dict);
+  }
+#nullable disable
 
   public void Stop()
   {
