@@ -51,7 +51,7 @@ public class PhyCar : Agent
             id = Name,
             filter = (_) =>
             {
-                return 
+                return
                     focused_car != "none" &&
                     Vector3.Distance(transform.position, cars[focused_car].transform.position) < focus_distance;
             }
@@ -76,10 +76,21 @@ public class PhyCar : Agent
 
     void Update()
     {
+        var formatFloat = new Func<float, string>((f) =>
+        {
+            if (float.IsNaN(f))
+            {
+                return "NaN";
+            }
+            else
+            {
+                return f.ToString("0.00");
+            }
+        });
         text.text = $"motor: {controller.motor:0.00} (v: {this.rb.velocity})\n" +
             $"steering: {controller.steering:0.00}\n" +
             $"brake: {controller.brake:0.00}\n" +
-            $"offset: {GetOffsetToCenterLine():0.00}\n" +
+            $"offset: {formatFloat(GetOffsetToCenterLine())}\n" +
             $"traffic light: {(TrafficLight != null ? TrafficLight.current_color : null) ?? "[UNK]"}";
     }
 
