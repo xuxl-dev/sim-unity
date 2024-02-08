@@ -182,7 +182,7 @@ public class PhyCar : Agent
                 return lane.GetComponent<LaneBehavior>().GetOffsetToCenterLine(transform.position);
             }
         }
-        return -1f;
+        return float.NaN;
     }
 
     private void OnCollisionEnter(Collision other)

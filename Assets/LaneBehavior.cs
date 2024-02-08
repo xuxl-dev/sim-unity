@@ -52,7 +52,8 @@ public class LaneBehavior : MonoBehaviour
         CUtils.DrawDebugLine(pos_y_0 + y_shift, perpendicular_y_0 + y_shift, Color.green);
 
         var offset = Vector3.Distance(pos_y_0, perpendicular_y_0);
-        return offset;
+        var left_or_right = Mathf.Sign(Vector3.Dot(Vector3.Cross(end_y_0 - beg_y_0, pos_y_0 - beg_y_0), Vector3.up));
+        return offset * left_or_right;
     }
 
 
