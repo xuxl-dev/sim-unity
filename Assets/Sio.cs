@@ -99,7 +99,6 @@ public class Sio : MonoBehaviour
     public static void EmitDict(string eventName, Dictionary<string, object> data)
     {
         if (socket == null || !socket.Connected) {
-            Dbg.Log("socket not connected");
             return;
         }
         Instance.Emit(eventName, data);

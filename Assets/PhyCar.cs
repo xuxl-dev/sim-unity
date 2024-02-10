@@ -10,6 +10,7 @@ using UnityEngine;
 
 public class PhyCar : Agent
 {
+    public PhyCarEnvController.PhyCarInfo info;
     [NonSerialized]
     static int _id = 0;
     [NonSerialized]
@@ -35,7 +36,6 @@ public class PhyCar : Agent
         CarCenterShift = CUtils.GetBounds(transform.Find("body").gameObject).center - this.transform.position;
         rb = GetComponent<Rigidbody>();
         cam_id = Zoomer.Instance.Register(transform.Find("vc").GetComponent<CinemachineVirtualCamera>());
-
 
         PhyEnvReporter.Instance.Subscribe(new PhyEnvReporter.SubscriberConfig
         {
@@ -76,6 +76,14 @@ public class PhyCar : Agent
 
     void Update()
     {
+        var offset = GetOffsetToCenterLine();
+
+        // when nan, this indicates the car is not on the road
+        if (float.IsNaN(offset))
+        {
+            OnDrop?.Invoke(this);
+        }
+
         var formatFloat = new Func<float, string>((f) =>
         {
             if (float.IsNaN(f))
@@ -90,8 +98,13 @@ public class PhyCar : Agent
         text.text = $"motor: {controller.motor:0.00} (v: {this.rb.velocity})\n" +
             $"steering: {controller.steering:0.00}\n" +
             $"brake: {controller.brake:0.00}\n" +
-            $"offset: {formatFloat(GetOffsetToCenterLine())}\n" +
+            $"offset: {formatFloat(offset)}\n" +
             $"traffic light: {(TrafficLight != null ? TrafficLight.current_color : null) ?? "[UNK]"}";
+    }
+
+    void FixedUpdate()
+    {
+        OnMove?.Invoke(this);
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -240,4 +253,9 @@ public class PhyCar : Agent
         Zoomer.Instance.Zoom(cam_id);
         PhyEnvReporter.Instance.Push("focused-car", new { obj = Name });
     }
+
+    public event Action<PhyCar, Collision> OnCollision;
+    public event Action<PhyCar> OnDrop;
+    public event Action<PhyCar> OnTrafficRuleViolation;
+    public event Action<PhyCar> OnMove;
 }

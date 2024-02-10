@@ -786,6 +786,7 @@ GameObject:
   - component: {fileID: 1181510783}
   - component: {fileID: 1181510787}
   - component: {fileID: 1181510788}
+  - component: {fileID: 1181510789}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -801,8 +802,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181510772}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.39777148, y: -0.58681864, z: 0.40353033, w: -0.5784332}
-  m_LocalPosition: {x: -61.339493, y: 109.57148, z: 7.1464124}
+  m_LocalRotation: {x: 0.31052056, y: -0.04021018, z: 0.013148443, w: 0.94962484}
+  m_LocalPosition: {x: 0.6608635, y: 19.761143, z: -91.504105}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1089,6 +1090,18 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 1181510772}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
+--- !u!114 &1181510789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181510772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea7edfb5467e1af40836190eea9f95e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1214474677
 GameObject:
   m_ObjectHideFlags: 0
@@ -1666,6 +1679,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f588677cda9134c4c92e50d27eed3bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   red: {fileID: 2100000, guid: 31d46e32ae365424ebeb5baba49d222c, type: 2}
   yellow: {fileID: 2100000, guid: 6afcd49b7197ffe4284af020db7450d9, type: 2}
   green: {fileID: 2100000, guid: f1b13cc926dfd3a46b41be0db52bc822, type: 2}
@@ -1674,7 +1688,6 @@ MonoBehaviour:
   - {fileID: 683659725}
   - {fileID: 1859248313}
   - {fileID: 983710276}
-  cars: []
   DoRepeat: 1
   states:
   - color: red
@@ -1846,7 +1859,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5755503285961501601, guid: 6f6ced598242bcd4bb8e8e3b1d3600b1, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9496249
+      value: 0.9496248
       objectReference: {fileID: 0}
     - target: {fileID: 5755503285961501601, guid: 6f6ced598242bcd4bb8e8e3b1d3600b1, type: 3}
       propertyPath: m_LocalRotation.x
@@ -1854,11 +1867,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5755503285961501601, guid: 6f6ced598242bcd4bb8e8e3b1d3600b1, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.040210158
+      value: -0.040210094
       objectReference: {fileID: 0}
     - target: {fileID: 5755503285961501601, guid: 6f6ced598242bcd4bb8e8e3b1d3600b1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.013148472
+      value: 0.013148425
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
