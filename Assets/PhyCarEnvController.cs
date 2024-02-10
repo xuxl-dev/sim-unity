@@ -6,7 +6,8 @@ using UnityEngine;
 public class PhyCarEnvController : MonoBehaviour
 {
     private SimpleMultiAgentGroup agentGroup;
-
+    int step = 0;
+    int max_steps = 10000;
     [System.Serializable]
     public class PhyCarInfo
     {
@@ -141,11 +142,20 @@ public class PhyCarEnvController : MonoBehaviour
 
     void FixedUpdate()
     {
+        // time penalty, being fast is good
+        agentGroup.AddGroupReward(-0.5f / max_steps);
 
+        step++;
+        if (step > max_steps)
+        {
+            agentGroup.GroupEpisodeInterrupted();
+            ResetScene();
+        }
     }
 
     void ResetScene()
     {
+        step = 0;
         if (settings.UseRandomSpawnPos)
         {
             foreach (var car in CarsList)
