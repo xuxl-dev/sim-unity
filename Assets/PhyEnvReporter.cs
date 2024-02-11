@@ -1,14 +1,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
+using Unity.RenderStreaming;
 using UnityEngine;
 
 public class PhyEnvReporter : MonoBehaviour
 {
   public static PhyEnvReporter Instance;
+  private SignalingManager signalingManager;
+  public bool trainingMode = false;
+
   private void Awake()
   {
     Instance = this;
+    signalingManager = GetComponent<SignalingManager>();
+    if (!trainingMode)
+    {
+      signalingManager.Run();
+    }
   }
 
   internal float report_interval = 0.1f;
@@ -35,7 +45,8 @@ public class PhyEnvReporter : MonoBehaviour
         {
           continue;
         }
-        var dict = Sio.MakeDict(new {
+        var dict = Sio.MakeDict(new
+        {
           payload = data,
           @event = subscriber.@event,
         });
@@ -58,7 +69,12 @@ public class PhyEnvReporter : MonoBehaviour
 #nullable enable
   public void Push(string @event, object data, string? id = null)
   {
-    var dict = Sio.MakeDict(new {
+    if (trainingMode)
+    {
+      return;
+    }
+    var dict = Sio.MakeDict(new
+    {
       payload = data,
       @event = @event,
     });
@@ -77,7 +93,36 @@ public class PhyEnvReporter : MonoBehaviour
 
   public void Start()
   {
+    if (trainingMode)
+    {
+      Debug.LogWarning("PhyEnvReporter will not working in training mode");
+
+      DisableComponentsWhenTraining();
+      Debug.LogWarning("Some components deactivated when training mode is enabled.");
+
+      Sio.prevent_init = true;
+      Debug.LogWarning("Sio is disabled when training mode is enabled.");
+      return;
+    }
     _stop = false;
     StartCoroutine(ReportCoroutine());
+  }
+
+  public void DisableComponentsWhenTraining()
+  {
+    var types = new List<Type>
+    {
+      typeof(CinemachineVirtualCamera),
+    };
+    if (trainingMode)
+    {
+      foreach (var T in types)
+      {
+        foreach (var component in FindObjectsOfType(T))
+        {
+          (component as MonoBehaviour).enabled = false;
+        }
+      }
+    }
   }
 }

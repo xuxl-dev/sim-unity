@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PhyCarEnvController : MonoBehaviour
 {
-    private SimpleMultiAgentGroup agentGroup;
+    private SimpleMultiAgentGroup agentGroup = new();
     int step = 0;
     int max_steps = 10000;
     [System.Serializable]
@@ -45,6 +45,7 @@ public class PhyCarEnvController : MonoBehaviour
     public List<Lane> lane_coords = new();
 
     public List<PhyCarInfo> CarsList = new();
+    public int Car_tot_count => CarsList.Count;
     internal PhyCarEnvSettings settings;
 
     [ContextMenu("Auto Add Cars")]
@@ -114,6 +115,8 @@ public class PhyCarEnvController : MonoBehaviour
     void Start()
     {
         settings = FindObjectOfType<PhyCarEnvSettings>();
+        AutoAddCars();
+
         foreach (var car in CarsList)
         {
             car.agent.info = car;
@@ -153,19 +156,28 @@ public class PhyCarEnvController : MonoBehaviour
         }
     }
 
+    public int active_agents = 0;
+    public float y_override = -0.4300001f;
+
+    [ContextMenu("ResetScene")]
     void ResetScene()
     {
         step = 0;
+        active_agents = CarsList.Count;
         if (settings.UseRandomSpawnPos)
         {
             foreach (var car in CarsList)
             {
                 var (start, target, direction) = GenerateRandomStartAndTarget();
+                start.y = y_override; //TODO refactor
+                target.y = y_override;
                 car.T.position = start;
                 car.target = target;
                 car.T.rotation = Quaternion.LookRotation(direction);
                 car.Rb.velocity = Vector3.zero;
                 car.Rb.angularVelocity = Vector3.zero;
+                // have to enable it here, otherwise the overlap check will fail
+                car.agent.gameObject.SetActive(true); 
             }
         }
         else
@@ -184,56 +196,88 @@ public class PhyCarEnvController : MonoBehaviour
             agentGroup.RegisterAgent(car.agent);
         }
     }
-
     private (Vector3 start, Vector3 target, Vector3 direction) GenerateRandomStartAndTarget()
     {
         var checkOccupied = new System.Func<Vector3, bool>((pos) =>
         {
-            return Physics.CheckBox(pos + new Vector3(0, 0.5f, 0), new Vector3(4f, 0.1f, 4f));
+            // this not working
+            // return Physics.CheckBox(pos + new Vector3(0, 0.5f, 0), new Vector3(5f, 0.1f, 5f));
+
+            foreach (var car in CarsList)
+            {
+                if (Vector3.Distance(car.T.position, pos) < 4f)
+                {
+                    return true;
+                }
+            }
+            return false;
         });
 
         for (int retry = 0; retry < 150; retry++)
         {
             var lane = lane_coords[Random.Range(0, lane_coords.Count)];
-            var partition = Random.Range(0f, 0.4f);
+            var partition = Random.Range(0.1f, 0.4f);
             var start = Vector3.Lerp(lane.beg, lane.end, partition);
             var target = Vector3.Lerp(lane.beg, lane.end, 1f - partition);
             if (checkOccupied(start) == false && checkOccupied(target) == false)
             {
-                return (start, target, lane.direction);
+                if (lane.reversed)
+                {
+                    return (target, start, -lane.direction.normalized);
+                }
+                else
+                {
+                    return (start, target, lane.direction.normalized);
+                }
             }
         }
 
         return (Vector3.zero, Vector3.zero, Vector3.zero);
     }
 
+
+    private void DisableAgent(PhyCar agent)
+    {
+        agent.gameObject.SetActive(false);
+
+        active_agents--;
+
+        if (active_agents == 0)
+        {
+            agentGroup.EndGroupEpisode();
+            ResetScene();
+        }
+    }
+
+
     void HandleCollision(PhyCar car, Collision other)
     {
         if (other.gameObject.CompareTag("car"))
         {
             car.SetReward(-1f);
-            car.gameObject.SetActive(false);
+            DisableAgent(car);
             // we dont want to disable the other car, because
             // collision is mutual
+            Debug.Log("collision with car");
         }
 
         if (other.gameObject.CompareTag("obstacle"))
         {
             car.SetReward(-1f);
-            car.gameObject.SetActive(false);
+            DisableAgent(car);
         }
     }
 
     void HandleDrop(PhyCar car)
     {
         car.SetReward(-1f);
-        car.gameObject.SetActive(false);
+        DisableAgent(car);
     }
 
     void HandleTargetReached(PhyCar car)
     {
         car.SetReward(5f);
-        car.gameObject.SetActive(false);
+        DisableAgent(car);
     }
 
 }

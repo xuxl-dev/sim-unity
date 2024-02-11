@@ -13,22 +13,31 @@ using Unity.VisualScripting;
 
 public class Sio : MonoBehaviour
 {
-    public static string MyId = "UNITY";
-    private void Awake()
-    {
-        Init();
-    }
     private static SocketIOUnity socket;
-
-    // only not in training mode
+    internal static bool prevent_init = false;
+    public static bool IsAvaliable
+    {
+        get
+        {
+            return !prevent_init && socket != null && socket.Connected;
+        }
+    }
+    void Awake()
+    {
+        var settings = FindObjectOfType<PhyEnvReporter>();
+        if (settings != null && settings.trainingMode)
+        {
+            prevent_init = true;
+        }
+        else
+        {
+            Init();
+        }
+    }
     public static SocketIOUnity Instance
     {
         get
         {
-            if (socket == null)
-            {
-                Init();
-            }
             return socket;
         }
     }
@@ -46,7 +55,7 @@ public class Sio : MonoBehaviour
             Transport = SocketIOClient.Transport.TransportProtocol.WebSocket,
             ReconnectionDelayMax = 5000,
             ReconnectionDelay = 1000,
-            ReconnectionAttempts = 5
+            ReconnectionAttempts = 2
         })
         {
             JsonSerializer = new NewtonsoftJsonSerializer()
@@ -91,14 +100,14 @@ public class Sio : MonoBehaviour
     public static void Emit(string eventName, object data)
     {
         var dict = MakeDict(data);
-        // dict["id"] = MyId;
         Instance.Emit(eventName, dict);
     }
 
     [Conditional("SIO_DEBUG")]
     public static void EmitDict(string eventName, Dictionary<string, object> data)
     {
-        if (socket == null || !socket.Connected) {
+        if (socket == null || !socket.Connected)
+        {
             return;
         }
         Instance.Emit(eventName, data);

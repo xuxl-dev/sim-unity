@@ -51,12 +51,14 @@ public class PseudoClick : MonoBehaviour
     }
     void Start()
     {
-        Sio.Instance.On("click", (data) =>
+        if (Sio.IsAvaliable)
         {
-            var dat = data.GetValue<Data>();
-            ClickAt(dat.x, dat.y);
-            Debug.Log("click at " + dat.x + " " + dat.y);
-        });
+            Sio.Instance.On("click", (data) =>
+            {
+                var dat = data.GetValue<Data>();
+                ClickAt(dat.x, dat.y);
+            });
+        }
     }
 
     void Update()

@@ -533,6 +533,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 246432376699082876, guid: 6f6ced598242bcd4bb8e8e3b1d3600b1, type: 3}
   m_PrefabInstance: {fileID: 1892866282}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &978800768 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8534040766081707477, guid: 6f6ced598242bcd4bb8e8e3b1d3600b1, type: 3}
+  m_PrefabInstance: {fileID: 1892866282}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfe8ac06af2eca84cb8d78345bbe1a88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &979272304
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,8 +813,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181510772}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.31052056, y: -0.04021018, z: 0.013148443, w: 0.94962484}
-  m_LocalPosition: {x: 0.6608635, y: 19.761143, z: -91.504105}
+  m_LocalRotation: {x: 0.22886851, y: 0.6430533, z: -0.21027383, w: 0.699919}
+  m_LocalPosition: {x: -92.974106, y: 19.761143, z: -0.6308601}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1117,7 +1128,7 @@ GameObject:
   - component: {fileID: 1214474683}
   m_Layer: 6
   m_Name: Plane (1)
-  m_TagString: Untagged
+  m_TagString: lane
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1262,6 +1273,17 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &1255174746 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8534040766081707477, guid: 6f6ced598242bcd4bb8e8e3b1d3600b1, type: 3}
+  m_PrefabInstance: {fileID: 3657909984034582398}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255174738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfe8ac06af2eca84cb8d78345bbe1a88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1294802055
 GameObject:
   m_ObjectHideFlags: 0
@@ -1311,7 +1333,7 @@ GameObject:
   - component: {fileID: 1305116029}
   m_Layer: 6
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: lane
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1896,7 +1918,7 @@ GameObject:
   - component: {fileID: 1913879872}
   m_Layer: 6
   m_Name: Plane (2)
-  m_TagString: Untagged
+  m_TagString: lane
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2100,7 +2122,7 @@ GameObject:
   - component: {fileID: 2003247599}
   m_Layer: 6
   m_Name: Plane (3)
-  m_TagString: Untagged
+  m_TagString: lane
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2215,6 +2237,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4330297169730325548}
+  - component: {fileID: 4330297169730325549}
   m_Layer: 0
   m_Name: TrainArea
   m_TagString: Untagged
@@ -2318,6 +2341,55 @@ Transform:
   - {fileID: 449904049}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4330297169730325549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596707729750479682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1ce5cd90884ce5489c1cb5c99004c66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lanes:
+  - {fileID: 1214474677}
+  - {fileID: 1305116022}
+  - {fileID: 1913879866}
+  - {fileID: 2003247593}
+  lane_coords:
+  - beg: {x: 1.7999998, y: -0.31, z: -76}
+    end: {x: 1.7999998, y: -0.31, z: 76}
+    direction: {x: 0, y: 0, z: 1}
+    reversed: 0
+  - beg: {x: -1.89, y: -0.31, z: -76}
+    end: {x: -1.89, y: -0.31, z: 76}
+    direction: {x: 0, y: 0, z: 1}
+    reversed: 0
+  - beg: {x: -76.100006, y: -0.3, z: 1.8}
+    end: {x: 75.90001, y: -0.3, z: 1.8}
+    direction: {x: 1, y: 0, z: 0}
+    reversed: 0
+  - beg: {x: -76.100006, y: -0.3, z: -1.9000001}
+    end: {x: 75.90001, y: -0.3, z: -1.9000001}
+    direction: {x: 1, y: 0, z: 0}
+    reversed: 0
+  CarsList:
+  - agent: {fileID: 978800768}
+    target: {x: 0, y: 0, z: 0}
+    T: {fileID: 0}
+    gameObject: {fileID: 0}
+    StartingPos: {x: 0, y: 0, z: 0}
+    StartingRot: {x: 0, y: 0, z: 0, w: 0}
+    Rb: {fileID: 0}
+  - agent: {fileID: 1255174746}
+    target: {x: 0, y: 0, z: 0}
+    T: {fileID: 0}
+    gameObject: {fileID: 0}
+    StartingPos: {x: 0, y: 0, z: 0}
+    StartingRot: {x: 0, y: 0, z: 0, w: 0}
+    Rb: {fileID: 0}
 --- !u!1001 &7307460723190491516
 PrefabInstance:
   m_ObjectHideFlags: 0

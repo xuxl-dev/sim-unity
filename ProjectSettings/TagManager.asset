@@ -11,6 +11,7 @@ TagManager:
   - crossing
   - traffic_light
   - obstacle
+  - lane
   layers:
   - Default
   - TransparentFX

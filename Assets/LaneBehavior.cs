@@ -6,7 +6,8 @@ public class LaneBehavior : MonoBehaviour
     public float road_y = 0f;
     internal Vector3 begin;
     internal Vector3 end;
-
+    public bool showGizmos = true;
+    
     public Vector3 BeginAbs => transform.TransformPoint(begin);
     public Vector3 EndAbs => transform.TransformPoint(end);
 
@@ -32,7 +33,8 @@ public class LaneBehavior : MonoBehaviour
     {
         var y_shift = new Vector3(0, debug_drawing_y, 0);
         // draw lane
-        Debug.DrawLine(begin + y_shift, end + y_shift, Color.red);
+        if (showGizmos)
+            Debug.DrawLine(begin + y_shift, end + y_shift, Color.red);
     }
 
     /// <summary>
@@ -48,8 +50,8 @@ public class LaneBehavior : MonoBehaviour
         var perpendicular = Vector3.Project(pos_y_0 - beg_y_0, end_y_0 - beg_y_0) + beg_y_0;
         var perpendicular_y_0 = new Vector3(perpendicular.x, 0, perpendicular.z);
         var y_shift = new Vector3(0, debug_drawing_y, 0);
-
-        CUtils.DrawDebugLine(pos_y_0 + y_shift, perpendicular_y_0 + y_shift, Color.green);
+        if (showGizmos)
+            CUtils.DrawDebugLine(pos_y_0 + y_shift, perpendicular_y_0 + y_shift, Color.green);
 
         var offset = Vector3.Distance(pos_y_0, perpendicular_y_0);
         var left_or_right = Mathf.Sign(Vector3.Dot(Vector3.Cross(end_y_0 - beg_y_0, pos_y_0 - beg_y_0), Vector3.up));

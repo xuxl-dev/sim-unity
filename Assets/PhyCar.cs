@@ -105,6 +105,11 @@ public class PhyCar : Agent
     void FixedUpdate()
     {
         OnMove?.Invoke(this);
+
+        if (this.transform.position.y < -1f)
+        {
+            OnDrop?.Invoke(this);
+        }
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -211,12 +216,7 @@ public class PhyCar : Agent
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("obstacle"))
-        {
-            Debug.Log("hit obstacle");
-            gameObject.SetActive(false);
-            other.gameObject.SetActive(false);
-        }
+        OnCollision?.Invoke(this, other);
     }
 
     private void OnCollisionExit(Collision other)
