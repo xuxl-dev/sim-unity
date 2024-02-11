@@ -135,6 +135,7 @@ public class PhyCarEnvController : MonoBehaviour
                 }
             };
         }
+
         ResetScene();
     }
 
@@ -146,7 +147,7 @@ public class PhyCarEnvController : MonoBehaviour
     void FixedUpdate()
     {
         // time penalty, being fast is good
-        agentGroup.AddGroupReward(-0.5f / max_steps);
+        agentGroup.AddGroupReward(-0.5f / max_steps * (active_agents / Car_tot_count));
 
         step++;
         if (step > max_steps)
@@ -177,7 +178,7 @@ public class PhyCarEnvController : MonoBehaviour
                 car.Rb.velocity = Vector3.zero;
                 car.Rb.angularVelocity = Vector3.zero;
                 // have to enable it here, otherwise the overlap check will fail
-                car.agent.gameObject.SetActive(true); 
+                car.agent.gameObject.SetActive(true);
             }
         }
         else
