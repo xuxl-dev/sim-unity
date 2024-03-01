@@ -118,7 +118,8 @@ public class PhyCarEnvController : MonoBehaviour
     {
         settings = FindObjectOfType<PhyCarEnvSettings>();
         AutoAddCars();
-        ReportRoads();
+        // ReportRoads();
+        Invoke(nameof(ReportRoads), 2f);
         foreach (var car in CarsList)
         {
             car.agent.info = car;
@@ -143,6 +144,7 @@ public class PhyCarEnvController : MonoBehaviour
 
     void ReportRoads()
     {
+        // Debug.Log("Reporting roads");
         var roads = new List<object>();
         foreach (var lane in lane_coords)
         {
@@ -160,7 +162,7 @@ public class PhyCarEnvController : MonoBehaviour
                 }
             });
         }
-        PhyEnvReporter.Instance.Push("roads", roads);
+        PhyEnvReporter.Instance.Push("roads", roads.ToArray());
     }
 
     void Update()

@@ -78,6 +78,7 @@ public class PhyEnvReporter : MonoBehaviour
 
     if (Sio.IsAvaliable == false)
     {
+      Debug.LogWarning("Sio is not ready, push to queue");
       _eventQueue.Enqueue((@event, data, id));
       return;
     }
@@ -85,12 +86,13 @@ public class PhyEnvReporter : MonoBehaviour
     var dict = Sio.MakeDict(new
     {
       payload = data,
-      @event = @event,
+      @event,
     });
     if (id != null) //todo refactor
     {
       dict["id"] = id;
     }
+    // Debug.Log($"PhyEnvReporter.dict: {dict} ");
     Sio.EmitDict(@event, dict);
   }
 #nullable disable
@@ -118,11 +120,13 @@ public class PhyEnvReporter : MonoBehaviour
 
     Sio.Ready += () =>
     {
+      Debug.Log("Sio.Ready, flushed cached events, total: " + _eventQueue.Count);
       foreach (var (e, d, id) in _eventQueue)
       {
+        // Debug.Log($"Resending: {e} ");
         Push(e, d, id);
       }
-      _eventQueue.Clear();
+      // _eventQueue.Clear();
     };
   }
 

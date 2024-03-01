@@ -82,7 +82,7 @@ public class Sio : MonoBehaviour
         socket.OnConnected += (sender, e) =>
         {
             Dbg.Log("socket.OnConnected");
-            Sio.Ready?.Invoke();
+            Ready?.Invoke();
         };
 
 
@@ -128,6 +128,10 @@ public class Sio : MonoBehaviour
                 continue;
             }
             if (value.GetType().IsPrimitive || value.GetType() == typeof(string))
+            {
+                pairDictionary.Add(prop.Name, value);
+            }
+            else if (value.GetType().IsArray)
             {
                 pairDictionary.Add(prop.Name, value);
             }
