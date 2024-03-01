@@ -67,12 +67,21 @@ public class PhyEnvReporter : MonoBehaviour
   }
 
 #nullable enable
+  private Queue<(string @event, object data, string? id)> _eventQueue = new();
+
   public void Push(string @event, object data, string? id = null)
   {
     if (trainingMode)
     {
       return;
     }
+
+    if (Sio.IsAvaliable == false)
+    {
+      _eventQueue.Enqueue((@event, data, id));
+      return;
+    }
+
     var dict = Sio.MakeDict(new
     {
       payload = data,
@@ -106,6 +115,15 @@ public class PhyEnvReporter : MonoBehaviour
     }
     _stop = false;
     StartCoroutine(ReportCoroutine());
+
+    Sio.Ready += () =>
+    {
+      foreach (var (e, d, id) in _eventQueue)
+      {
+        Push(e, d, id);
+      }
+      _eventQueue.Clear();
+    };
   }
 
   public void DisableComponentsWhenTraining()

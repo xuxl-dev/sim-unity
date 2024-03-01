@@ -45,7 +45,7 @@ public class Sio : MonoBehaviour
     // Start is called before the first frame update
     static void Init()
     {
-        var uri = new Uri("http://127.0.0.1:3666"); 
+        var uri = new Uri("http://127.0.0.1:3666");
         Dbg.Log("socket trying connect to " + uri);
         socket = new SocketIOUnity(uri, new SocketIOOptions
         {
@@ -82,6 +82,7 @@ public class Sio : MonoBehaviour
         socket.OnConnected += (sender, e) =>
         {
             Dbg.Log("socket.OnConnected");
+            Sio.Ready?.Invoke();
         };
 
 
@@ -137,4 +138,6 @@ public class Sio : MonoBehaviour
         }
         return pairDictionary;
     }
+
+    public static event Action Ready;
 }

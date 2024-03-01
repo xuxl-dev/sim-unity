@@ -160,7 +160,7 @@ public class PhyCarEnvController : MonoBehaviour
                 }
             });
         }
-        // PhyEnvReporter.Instance.Push("roads", roads);
+        PhyEnvReporter.Instance.Push("roads", roads);
     }
 
     void Update()
