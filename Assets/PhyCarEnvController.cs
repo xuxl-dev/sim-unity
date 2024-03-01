@@ -33,13 +33,15 @@ public class PhyCarEnvController : MonoBehaviour
         public Vector3 end;
         public Vector3 direction;
         public bool reversed;
+        public GameObject gameObject;
 
-        public Lane(Vector3 beg, Vector3 end, Vector3 direction, bool reversed)
+        public Lane(Vector3 beg, Vector3 end, Vector3 direction, bool reversed, GameObject gameObject)
         {
             this.beg = beg;
             this.end = end;
             this.direction = direction;
             this.reversed = reversed;
+            this.gameObject = gameObject;
         }
     }
     public List<Lane> lane_coords = new();
@@ -84,7 +86,7 @@ public class PhyCarEnvController : MonoBehaviour
                 var end = boundingBox.center + new Vector3(boundingBox.extents.x, 0, 0);
                 var direction = (end - beg).normalized;
                 var reversed = false; // this is assgined by user later
-                lane_coords.Add(new Lane(beg, end, direction, reversed));
+                lane_coords.Add(new Lane(beg, end, direction, reversed, lane));
             }
             else
             {
@@ -92,7 +94,7 @@ public class PhyCarEnvController : MonoBehaviour
                 var end = boundingBox.center + new Vector3(0, 0, boundingBox.extents.z);
                 var direction = (end - beg).normalized;
                 var reversed = false; // this is assgined by user later
-                lane_coords.Add(new Lane(beg, end, direction, reversed));
+                lane_coords.Add(new Lane(beg, end, direction, reversed, lane));
             }
         }
     }
@@ -144,15 +146,21 @@ public class PhyCarEnvController : MonoBehaviour
         var roads = new List<object>();
         foreach (var lane in lane_coords)
         {
+            var boundingBox = CUtils.GetBounds(lane.gameObject);
             roads.Add(new
             {
-                lane.beg,
-                lane.end,
-                lane.direction,
-                lane.reversed
+                beg = lane.beg.ToObject(),
+                end = lane.end.ToObject(),
+                direction = lane.direction.ToObject(),
+                lane.reversed,
+                boundingBox = new
+                {
+                    min = boundingBox.min.ToObject(),
+                    max = boundingBox.max.ToObject()
+                }
             });
         }
-        PhyEnvReporter.Instance.Push("roads", roads);
+        // PhyEnvReporter.Instance.Push("roads", roads);
     }
 
     void Update()
@@ -196,8 +204,8 @@ public class PhyCarEnvController : MonoBehaviour
                 var (start, target, direction) = GenerateRandomStartAndTarget();
                 start.y = y_override; //TODO refactor
                 target.y = y_override;
-                car.T.localPosition = start;
-                car.target = target + this.transform.position;
+                car.T.position = start;
+                car.target = target;
                 car.T.rotation = Quaternion.LookRotation(direction);
                 car.Rb.velocity = Vector3.zero;
                 car.Rb.angularVelocity = Vector3.zero;
@@ -209,7 +217,7 @@ public class PhyCarEnvController : MonoBehaviour
         {
             foreach (var car in CarsList)
             {
-                car.T.localPosition = car.StartingPos;
+                car.T.position = car.StartingPos;
                 car.T.rotation = car.StartingRot;
                 car.Rb.velocity = Vector3.zero;
                 car.Rb.angularVelocity = Vector3.zero;
@@ -230,7 +238,7 @@ public class PhyCarEnvController : MonoBehaviour
 
             foreach (var car in CarsList)
             {
-                if (Vector3.Distance(car.T.localPosition, pos) < 5f)
+                if (Vector3.Distance(car.T.position, pos) < 5f)
                 {
                     return true;
                 }
@@ -245,8 +253,8 @@ public class PhyCarEnvController : MonoBehaviour
             var start = Vector3.Lerp(lane.beg, lane.end, partition);
             var target = Vector3.Lerp(lane.beg, lane.end, 1f - partition);
             // mark the start and target
-            Debug.DrawLine(this.transform.position + start, this.transform.position + start + new Vector3(0, 5f, 0), Color.green, 1);
-            Debug.DrawLine(this.transform.position + target, this.transform.position + target + new Vector3(0, 5f, 0), Color.blue, 1);
+            Debug.DrawLine(start, start + new Vector3(0, 5f, 0), Color.green, 1);
+            Debug.DrawLine(target, target + new Vector3(0, 5f, 0), Color.blue, 1);
             if (checkOccupied(start) == false && checkOccupied(target) == false)
             {
                 if (lane.reversed)

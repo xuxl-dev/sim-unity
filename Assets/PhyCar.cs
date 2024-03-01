@@ -70,6 +70,7 @@ public class PhyCar : Agent
                 position = transform.position.ToObject(),
                 rotation = transform.rotation.ToObject(),
                 offset = GetOffsetToCenterLine(),
+                lane = old_lane?.name ?? "<none>",
             };
         }
     }
