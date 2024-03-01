@@ -13,7 +13,7 @@ public class PhyEnvReporter : MonoBehaviour
 
   private void Awake()
   {
-    Instance = this;
+    Instance = GetComponent<PhyEnvReporter>();
     signalingManager = GetComponent<SignalingManager>();
     if (!trainingMode)
     {
@@ -21,7 +21,7 @@ public class PhyEnvReporter : MonoBehaviour
     }
   }
 
-  internal float report_interval = 0.1f;
+  internal float report_interval = 1f;
   private bool _stop = false;
   public class SubscriberConfig
   {

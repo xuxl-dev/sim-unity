@@ -27,6 +27,7 @@ public class Sio : MonoBehaviour
         var settings = FindObjectOfType<PhyEnvReporter>();
         if (settings != null && settings.trainingMode)
         {
+            Dbg.Log("Sio prevent init");
             prevent_init = true;
         }
         else
@@ -44,7 +45,8 @@ public class Sio : MonoBehaviour
     // Start is called before the first frame update
     static void Init()
     {
-        var uri = new Uri("http://127.0.0.1:3666");
+        var uri = new Uri("http://127.0.0.1:3666"); 
+        Dbg.Log("socket trying connect to " + uri);
         socket = new SocketIOUnity(uri, new SocketIOOptions
         {
             Query = new Dictionary<string, string>

@@ -106,8 +106,9 @@ public class PhyCar : Agent
     {
         OnMove?.Invoke(this);
 
-        if (this.transform.position.y < -1f)
+        if (this.transform.localPosition.y < -1f)
         {
+            Debug.Log("Car is dropped, pos is " + this.transform.position);
             OnDrop?.Invoke(this);
         }
     }
@@ -186,6 +187,12 @@ public class PhyCar : Agent
         RaycastHit[] hits = new RaycastHit[4]; // max 4 lanes
         // draw detection line
         // cast a ray top down to get the current lane
+        // draw detection line
+        // Debug.DrawRay(
+        //     transform.position + CarCenterShift + new Vector3(0, 4, 0),
+        //     Vector3.down * 20f,
+        //     Color.red
+        // );
         if (Physics.RaycastNonAlloc(
             transform.position + CarCenterShift + new Vector3(0, 4, 0),
             Vector3.down,

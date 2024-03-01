@@ -7,7 +7,7 @@ public class PhyCarEnvController : MonoBehaviour
 {
     private SimpleMultiAgentGroup agentGroup = new();
     int step = 0;
-    int max_steps = 10000;
+    int max_steps = 1000;
     [System.Serializable]
     public class PhyCarInfo
     {
@@ -116,7 +116,7 @@ public class PhyCarEnvController : MonoBehaviour
     {
         settings = FindObjectOfType<PhyCarEnvSettings>();
         AutoAddCars();
-
+        ReportRoads();
         foreach (var car in CarsList)
         {
             car.agent.info = car;
@@ -139,6 +139,22 @@ public class PhyCarEnvController : MonoBehaviour
         ResetScene();
     }
 
+    void ReportRoads()
+    {
+        var roads = new List<object>();
+        foreach (var lane in lane_coords)
+        {
+            roads.Add(new
+            {
+                lane.beg,
+                lane.end,
+                lane.direction,
+                lane.reversed
+            });
+        }
+        PhyEnvReporter.Instance.Push("roads", roads);
+    }
+
     void Update()
     {
 
@@ -153,6 +169,14 @@ public class PhyCarEnvController : MonoBehaviour
         if (step > max_steps)
         {
             agentGroup.GroupEpisodeInterrupted();
+            // if not disabled, that means agent got stuck
+            foreach (var car in CarsList)
+            {
+                if (car.agent.gameObject.activeSelf)
+                {
+                    car.agent.SetReward(-1f);
+                }
+            }
             ResetScene();
         }
     }
@@ -172,8 +196,8 @@ public class PhyCarEnvController : MonoBehaviour
                 var (start, target, direction) = GenerateRandomStartAndTarget();
                 start.y = y_override; //TODO refactor
                 target.y = y_override;
-                car.T.position = start;
-                car.target = target;
+                car.T.localPosition = start;
+                car.target = target + this.transform.position;
                 car.T.rotation = Quaternion.LookRotation(direction);
                 car.Rb.velocity = Vector3.zero;
                 car.Rb.angularVelocity = Vector3.zero;
@@ -185,7 +209,7 @@ public class PhyCarEnvController : MonoBehaviour
         {
             foreach (var car in CarsList)
             {
-                car.T.position = car.StartingPos;
+                car.T.localPosition = car.StartingPos;
                 car.T.rotation = car.StartingRot;
                 car.Rb.velocity = Vector3.zero;
                 car.Rb.angularVelocity = Vector3.zero;
@@ -206,7 +230,7 @@ public class PhyCarEnvController : MonoBehaviour
 
             foreach (var car in CarsList)
             {
-                if (Vector3.Distance(car.T.position, pos) < 4f)
+                if (Vector3.Distance(car.T.localPosition, pos) < 5f)
                 {
                     return true;
                 }
@@ -220,6 +244,9 @@ public class PhyCarEnvController : MonoBehaviour
             var partition = Random.Range(0.1f, 0.4f);
             var start = Vector3.Lerp(lane.beg, lane.end, partition);
             var target = Vector3.Lerp(lane.beg, lane.end, 1f - partition);
+            // mark the start and target
+            Debug.DrawLine(this.transform.position + start, this.transform.position + start + new Vector3(0, 5f, 0), Color.green, 1);
+            Debug.DrawLine(this.transform.position + target, this.transform.position + target + new Vector3(0, 5f, 0), Color.blue, 1);
             if (checkOccupied(start) == false && checkOccupied(target) == false)
             {
                 if (lane.reversed)
@@ -232,7 +259,7 @@ public class PhyCarEnvController : MonoBehaviour
                 }
             }
         }
-
+        Debug.LogError("Can't find start pos");
         return (Vector3.zero, Vector3.zero, Vector3.zero);
     }
 
@@ -259,7 +286,7 @@ public class PhyCarEnvController : MonoBehaviour
             DisableAgent(car);
             // we dont want to disable the other car, because
             // collision is mutual
-            Debug.Log("collision with car");
+            // Debug.Log("collision with car");
         }
 
         if (other.gameObject.CompareTag("obstacle"))
@@ -267,12 +294,14 @@ public class PhyCarEnvController : MonoBehaviour
             car.SetReward(-1f);
             DisableAgent(car);
         }
+        // Debug.Log("hit");
     }
 
     void HandleDrop(PhyCar car)
     {
         car.SetReward(-1f);
         DisableAgent(car);
+        // Debug.Log("drop");
     }
 
     void HandleTargetReached(PhyCar car)

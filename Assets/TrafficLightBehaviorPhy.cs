@@ -32,10 +32,15 @@ public class TrafficLightBehaviorPhy : MonoBehaviour
 
     private void Awake()
     {
-        this.Start();
+
     }
 
-    void Start()
+    private void Start()
+    {
+        Init();
+    }
+
+    void Init()
     {
         StartCoroutine(BeginTrafficLight());
         PhyEnvReporter.Instance.Subscribe(new PhyEnvReporter.SubscriberConfig
@@ -77,7 +82,7 @@ public class TrafficLightBehaviorPhy : MonoBehaviour
         {
             yield return new WaitForSeconds(resolution_ms / 1000f);
             milliseconds_left -= resolution_ms;
-            Sync();
+            // Sync();
         }
     }
 
@@ -121,17 +126,17 @@ public class TrafficLightBehaviorPhy : MonoBehaviour
         }
     }
 
-    internal void Sync()
-    {
-        foreach (var car in cars)
-        {
-            PhyEnvReporter.Instance.Push("trafficlight", new
-            {
-                previous = previous_color,
-                color = current_color,
-                time = milliseconds_left,
-                abs_time = DateTime.Now.ToBinary()
-            }, car.Name);
-        }
-    }
+    // internal void Sync()
+    // {
+    //     foreach (var car in cars)
+    //     {
+    //         PhyEnvReporter.Instance.Push("trafficlight", new
+    //         {
+    //             previous = previous_color,
+    //             color = current_color,
+    //             time = milliseconds_left,
+    //             abs_time = DateTime.Now.ToBinary()
+    //         }, car.Name);
+    //     }
+    // }
 }
