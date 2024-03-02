@@ -21,7 +21,7 @@ public class PhyEnvReporter : MonoBehaviour
     }
   }
 
-  internal float report_interval = 1f;
+  public float report_interval = 0.2f;
   private bool _stop = false;
   public class SubscriberConfig
   {
