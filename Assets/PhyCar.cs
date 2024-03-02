@@ -25,7 +25,7 @@ public class PhyCar : Agent
     static Dictionary<string, PhyCar> cars = new();
     static string focused_car = "none";
     static float focus_distance = 10f;
-
+    internal bool is_visible = false;
     void Start()
     {
         id = _id++;
@@ -71,6 +71,7 @@ public class PhyCar : Agent
                 rotation = transform.rotation.ToObject(),
                 offset = GetOffsetToCenterLine(),
                 lane = old_lane?.name ?? "<none>",
+                visibility = this.is_visible,
             };
         }
     }

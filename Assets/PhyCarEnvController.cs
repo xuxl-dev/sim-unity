@@ -229,6 +229,7 @@ public class PhyCarEnvController : MonoBehaviour
         foreach (var car in CarsList)
         {
             agentGroup.RegisterAgent(car.agent);
+            car.agent.is_visible = true;
         }
     }
     private (Vector3 start, Vector3 target, Vector3 direction) GenerateRandomStartAndTarget()
@@ -277,7 +278,7 @@ public class PhyCarEnvController : MonoBehaviour
     private void DisableAgent(PhyCar agent)
     {
         agent.gameObject.SetActive(false);
-
+        agent.is_visible = false;
         active_agents--;
 
         if (active_agents == 0)
