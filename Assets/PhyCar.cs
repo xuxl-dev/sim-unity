@@ -44,18 +44,28 @@ public class PhyCar : Agent
             id = Name,
         });
 
-        PhyEnvReporter.Instance.Subscribe(new PhyEnvReporter.SubscriberConfig
-        {
-            @event = "focused-nearby-cars",
-            data = GetBriefFunc(),
-            id = Name,
-            filter = (_) =>
-            {
-                return
-                    focused_car != "none" &&
-                    Vector3.Distance(transform.position, cars[focused_car].transform.position) < focus_distance;
-            }
-        });
+        // PhyEnvReporter.Instance.Subscribe(new PhyEnvReporter.SubscriberConfig
+        // {
+        //     @event = "nearby-cars",
+        //     data = () => new { 
+        //         cars = cars.Values
+        //             .Where(car => car != this)
+        //             .Where(car => Vector3.Distance(transform.position, car.transform.position) < focus_distance)
+        //             .Select(car => new { 
+        //                 id = car.Name,
+        //                 position = car.transform.position.ToObject(),
+        //                 velocity = car.rb.velocity.ToObject(),
+        //                 angular_velocity = car.rb.angularVelocity.ToObject(),
+        //                 rotation = car.transform.rotation.ToObject(),
+        //             })
+        //     },
+        //     id = Name,
+        //     filter = (_) =>
+        //     {
+        //         return
+        //             Vector3.Distance(transform.position, cars[focused_car].transform.position) < focus_distance;
+        //     }
+        // });
 
         Func<object> GetBriefFunc()
         {
@@ -72,6 +82,7 @@ public class PhyCar : Agent
                 offset = GetOffsetToCenterLine(),
                 lane = old_lane?.name ?? "<none>",
                 visibility = this.is_visible,
+                traffic_light = TrafficLight?.current_color ?? "<none>",
             };
         }
     }

@@ -12,6 +12,9 @@ TagManager:
   - traffic_light
   - obstacle
   - lane
+  - Ladder
+  - LadderLandingPad
+  - minimap-item
   layers:
   - Default
   - TransparentFX
