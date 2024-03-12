@@ -8,7 +8,6 @@ public class Clicker : MonoBehaviour
     void Start()
     {
         m_Camera = Camera.main;
-        
     }
 
     Camera m_Camera;
@@ -58,6 +57,20 @@ public class Clicker : MonoBehaviour
             left_down = Vector3.zero;
             right_down = Vector3.zero;
         }
+
+        if (left_down != Vector3.zero)
+        {
+            var current = Vector3.zero;
+            GetPoint(out current);
+            Debug.DrawLine(left_down, current, Color.red);
+        }
+
+        if (right_down != Vector3.zero)
+        {
+            var current = Vector3.zero;
+            GetPoint(out current);
+            Debug.DrawLine(right_down, current, Color.blue);
+        }
     }
 
     private void GetPoint(out Vector3 point)
@@ -73,10 +86,7 @@ public class Clicker : MonoBehaviour
             Debug.DrawLine(ray.origin, hit.point);
             GameObject gameobj = hit.collider.gameObject;
             //注意要将对象的tag设置成collider才能检测到
-            if (gameobj.CompareTag("road"))
-            {
-                point = hit.point;
-            }
+            point = hit.point;
         }
     }
 }
