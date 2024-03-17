@@ -1,18 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class Clicker : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
-        m_Camera = Camera.main;
+        m_Camera = GetComponent<Camera>();
     }
 
     Camera m_Camera;
     Vector3 left_down;
     Vector3 right_down;
+
+    enum Phase
+    {
+        WaitingForLeftDown,
+        WaitingForRightDown
+    }
+    Phase phase = Phase.WaitingForLeftDown;
 
     [System.Serializable]
     public struct Vec3Pair
@@ -29,33 +36,39 @@ public class Clicker : MonoBehaviour
 
     public List<Vec3Pair> pairs = new();
     bool isDone = false;
-
+    readonly object _lock = new();
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && phase == Phase.WaitingForLeftDown)
         {
             GetPoint(out left_down);
+            phase = Phase.WaitingForRightDown;
         }
-        if (Input.GetMouseButton(1))
+
+        if (Input.GetMouseButton(1) && phase == Phase.WaitingForRightDown)
         {
             GetPoint(out right_down);
         }
-
-        if (left_down != Vector3.zero && right_down != Vector3.zero && !isDone)
+        lock (_lock)
         {
-            Debug.Log("left_down: " + left_down);
-            Debug.Log("right_down: " + right_down);
-            isDone = true;
 
-            pairs.Add(new(left_down, right_down));
-        }
+            if (left_down != Vector3.zero
+                && right_down != Vector3.zero
+                && !isDone
+            )
+            {
+                Debug.Log("left_down: " + left_down);
+                Debug.Log("right_down: " + right_down);
+                isDone = true;
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            isDone = false;
-            left_down = Vector3.zero;
-            right_down = Vector3.zero;
+                pairs.Add(new(left_down, right_down));
+                Sync();
+                left_down = Vector3.zero;
+                right_down = Vector3.zero;
+                isDone = false;
+                phase = Phase.WaitingForLeftDown;
+            }
         }
 
         if (left_down != Vector3.zero)
@@ -65,11 +78,10 @@ public class Clicker : MonoBehaviour
             Debug.DrawLine(left_down, current, Color.red);
         }
 
-        if (right_down != Vector3.zero)
+        //draw existing lines
+        foreach (var pair in pairs)
         {
-            var current = Vector3.zero;
-            GetPoint(out current);
-            Debug.DrawLine(right_down, current, Color.blue);
+            Debug.DrawLine(pair.start, pair.end, Color.green);
         }
     }
 
@@ -89,4 +101,17 @@ public class Clicker : MonoBehaviour
             point = hit.point;
         }
     }
+
+    // append latest data to file
+    const string path = "Assets/points.txt";
+    private void Sync()
+    {
+        StreamWriter writer = new(path, true);
+        var latest = pairs[^1];
+        writer.WriteLine($"{{\"start\": {latest.start}, \"end\": {latest.end}}},");
+        writer.Close();
+
+    }
+
+
 }

@@ -48,6 +48,8 @@ public class TrafficLightBehaviorPhy : MonoBehaviour
             @event = "trafficlight-status",
             data = () => new
             {
+                id = Name,
+                position = transform.position.ToObject(),
                 previous = previous_color,
                 color = current_color,
                 time = milliseconds_left,

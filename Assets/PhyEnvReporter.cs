@@ -15,7 +15,7 @@ public class PhyEnvReporter : MonoBehaviour
   {
     Instance = GetComponent<PhyEnvReporter>();
     signalingManager = GetComponent<SignalingManager>();
-    if (!trainingMode)
+    if (!trainingMode && signalingManager != null)
     {
       signalingManager.Run();
     }
