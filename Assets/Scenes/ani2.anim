@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: cars01
+  m_Name: ani2
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -20,141 +20,121 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: -41.243263, y: 450.51434, z: 145.77502}
-        inSlope: {x: 0, y: 0, z: -22.805748}
-        outSlope: {x: 0, y: 0, z: -22.805748}
+        value: {x: 36.099625, y: 1.1813531, z: -7.778473}
+        inSlope: {x: -13.394201, y: 0, z: 0}
+        outSlope: {x: -13.394201, y: 0, z: 0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.42815256}
+        outWeight: {x: 0.06625832, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 1.2666667
-        value: {x: -41.243263, y: 450.51434, z: 127.2921}
-        inSlope: {x: 0, y: 0, z: -0.084059976}
-        outSlope: {x: 0, y: 0, z: -0.084059976}
+        time: 6
+        value: {x: -23.2, y: 1.1813531, z: -7.778473}
+        inSlope: {x: -12.202152, y: 0, z: 0}
+        outSlope: {x: -12.202152, y: 0, z: 0}
         tangentMode: 0
         weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.9969069}
-      - serializedVersion: 3
-        time: 1.3333334
-        value: {x: -41.243263, y: 450.51434, z: 127.283005}
-        inSlope: {x: 0, y: 0, z: -0.18409406}
-        outSlope: {x: 0, y: 0, z: -0.18409406}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-      - serializedVersion: 3
-        time: 2.05
-        value: {x: -41.243263, y: 450.51434, z: 127.220184}
-        inSlope: {x: 0, y: 0, z: 0.56530094}
-        outSlope: {x: 0, y: 0, z: 0.56530094}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 1}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.09721178}
-      - serializedVersion: 3
-        time: 2.1333334
-        value: {x: -41.243263, y: 450.51434, z: 127.11207}
-        inSlope: {x: 0, y: 0, z: -3.118958}
-        outSlope: {x: 0, y: 0, z: -3.118958}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-      - serializedVersion: 3
-        time: 3.5
-        value: {x: -41.243263, y: 450.51434, z: 98.17438}
-        inSlope: {x: 0, y: 0, z: -28.091635}
-        outSlope: {x: 0, y: 0, z: -28.091635}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-      - serializedVersion: 3
-        time: 4.05
-        value: {x: -41.243263, y: 450.51434, z: 84.65}
-        inSlope: {x: 0, y: 0, z: -19.284134}
-        outSlope: {x: 0, y: 0, z: -19.284134}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33768064}
+        inWeight: {x: 0.052895386, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Free Racing Car
+    path: Free Racing Car Gray Variant
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: -41.683113, y: 450.45, z: 153.93185}
-        inSlope: {x: 0, y: 0, z: -24.950047}
-        outSlope: {x: 0, y: 0, z: -24.950047}
+        value: {x: 9.13, y: 1.1825049, z: 45.67}
+        inSlope: {x: 0, y: 0, z: -14.585278}
+        outSlope: {x: 0, y: 0, z: -14.585278}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.35909566}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.12690917}
       - serializedVersion: 3
-        time: 1.2666667
-        value: {x: -41.683113, y: 450.45, z: 134.3021}
-        inSlope: {x: 0, y: 0, z: -0.69528586}
-        outSlope: {x: 0, y: 0, z: -0.69528586}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.26754808}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.63522947}
-      - serializedVersion: 3
-        time: 1.3333334
-        value: {x: -41.683113, y: 450.45, z: 134.2628}
-        inSlope: {x: 0, y: 0, z: -0.48803455}
-        outSlope: {x: 0, y: 0, z: -0.48803455}
+        time: 2.8166666
+        value: {x: 9.13, y: 1.1825049, z: 16.2}
+        inSlope: {x: 0, y: 0, z: -0.18935147}
+        outSlope: {x: 0, y: 0, z: -0.18935147}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 2.05
-        value: {x: -41.683113, y: 450.45, z: 134.23016}
-        inSlope: {x: 0, y: 0, z: -0.1924126}
-        outSlope: {x: 0, y: 0, z: -0.1924126}
+        time: 3.75
+        value: {x: 9.13, y: 1.1825049, z: 16.022484}
+        inSlope: {x: 0, y: 0, z: -0.7141979}
+        outSlope: {x: 0, y: 0, z: -0.7141979}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33893093}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.1605406}
       - serializedVersion: 3
-        time: 2.1333334
-        value: {x: -41.683113, y: 450.45, z: 134.07355}
-        inSlope: {x: 0, y: 0, z: -3.532477}
-        outSlope: {x: 0, y: 0, z: -3.532477}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-      - serializedVersion: 3
-        time: 3.5
-        value: {x: -41.683113, y: 450.45, z: 105.58772}
-        inSlope: {x: 0, y: 0, z: -28.920923}
-        outSlope: {x: 0, y: 0, z: -28.920923}
+        time: 3.7833333
+        value: {x: 9.13, y: 1.1825049, z: 15.994988}
+        inSlope: {x: 0, y: 0, z: -0.93594104}
+        outSlope: {x: 0, y: 0, z: -0.93594104}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 4.05
-        value: {x: -41.683113, y: 450.45, z: 90.75944}
-        inSlope: {x: 0, y: 0, z: -23.504715}
-        outSlope: {x: 0, y: 0, z: -23.504715}
+        time: 6
+        value: {x: 9.13, y: 1.1825049, z: -7.094574}
+        inSlope: {x: 0, y: 0, z: -21.957697}
+        outSlope: {x: 0, y: 0, z: -21.957697}
         tangentMode: 0
         weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.28378245}
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.1737194}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Free Racing Car Blue Variant
+    path: Free Racing Car Purple Variant
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 9.322899, y: 1.1825049, z: 37.648956}
+        inSlope: {x: 0, y: 0, z: -16.786386}
+        outSlope: {x: 0, y: 0, z: -16.786386}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.15454179}
+      - serializedVersion: 3
+        time: 2.1833334
+        value: {x: 9.322899, y: 1.1825049, z: 3.982655}
+        inSlope: {x: 0, y: 0, z: -0.9519649}
+        outSlope: {x: 0, y: 0, z: -0.9519649}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.14772455}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.4530771}
+      - serializedVersion: 3
+        time: 2.9166667
+        value: {x: 9.322899, y: 1.1825049, z: 3.920393}
+        inSlope: {x: 0, y: 0, z: -0.030967666}
+        outSlope: {x: 0, y: 0, z: -0.030967666}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.12562443}
+      - serializedVersion: 3
+        time: 6
+        value: {x: 9.322899, y: 1.1825049, z: -20.198448}
+        inSlope: {x: 0, y: 0, z: -14.807634}
+        outSlope: {x: 0, y: 0, z: -14.807634}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.098597504}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: Free Racing Car Red Variant
   m_ScaleCurves: []
   m_FloatCurves: []
   m_PPtrCurves: []
@@ -166,7 +146,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 2923321560
+      path: 1650929250
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -175,7 +155,16 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1660233288
+      path: 432268507
+      attribute: 1
+      script: {fileID: 0}
+      typeID: 4
+      customType: 0
+      isPPtrCurve: 0
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
+    - serializedVersion: 2
+      path: 3976382833
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -189,7 +178,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 4.05
+    m_StopTime: 6
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -211,45 +200,27 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -41.243263
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
+        value: 36.099625
+        inSlope: -13.394201
+        outSlope: -13.394201
+        tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.33333334
+        outWeight: 0.06625832
       - serializedVersion: 3
-        time: 1.3333334
-        value: -41.243263
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
+        time: 6
+        value: -23.2
+        inSlope: -12.202152
+        outSlope: -12.202152
+        tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 2.1333334
-        value: -41.243263
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 3.5
-        value: -41.243263
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
+        inWeight: 0.052895386
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: Free Racing Car
+    path: Free Racing Car Gray Variant
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -259,7 +230,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 450.51434
+        value: 1.1813531
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -270,7 +241,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: Free Racing Car
+    path: Free Racing Car Gray Variant
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -280,45 +251,18 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 145.77502
-        inSlope: -22.805748
-        outSlope: -22.805748
-        tangentMode: 0
+        value: -7.778473
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.42815256
-      - serializedVersion: 3
-        time: 1.2666667
-        value: 127.2921
-        inSlope: -0.084059976
-        outSlope: -0.084059976
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.9969069
-      - serializedVersion: 3
-        time: 2.05
-        value: 127.220184
-        inSlope: 0.56530094
-        outSlope: 0.56530094
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 1
-        outWeight: 0.09721178
-      - serializedVersion: 3
-        time: 4.05
-        value: 84.65
-        inSlope: -19.284134
-        outSlope: -19.284134
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33768064
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: Free Racing Car
+    path: Free Racing Car Gray Variant
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -328,7 +272,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -41.683113
+        value: 9.13
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -336,8 +280,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 1.3333334
-        value: -41.683113
+        time: 3.7833333
+        value: 9.13
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -345,17 +289,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 2.1333334
-        value: -41.683113
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 3.5
-        value: -41.683113
+        time: 6
+        value: 9.13
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -366,7 +301,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: Free Racing Car Blue Variant
+    path: Free Racing Car Purple Variant
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -376,7 +311,25 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 450.45
+        value: 1.1825049
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 3.7833333
+        value: 1.1825049
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 6
+        value: 1.1825049
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -387,7 +340,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: Free Racing Car Blue Variant
+    path: Free Racing Car Purple Variant
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -397,45 +350,153 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 153.93185
-        inSlope: -24.950047
-        outSlope: -24.950047
+        value: 45.67
+        inSlope: -14.585278
+        outSlope: -14.585278
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.35909566
+        outWeight: 0.12690917
       - serializedVersion: 3
-        time: 1.2666667
-        value: 134.3021
-        inSlope: -0.69528586
-        outSlope: -0.69528586
-        tangentMode: 0
+        time: 2.8166666
+        value: 16.2
+        inSlope: -0.18935147
+        outSlope: -0.18935147
+        tangentMode: 136
         weightedMode: 0
-        inWeight: 0.26754808
-        outWeight: 0.63522947
+        inWeight: 0.33333334
+        outWeight: 0.33333334
       - serializedVersion: 3
-        time: 2.05
-        value: 134.23016
-        inSlope: -0.1924126
-        outSlope: -0.1924126
+        time: 3.75
+        value: 16.022484
+        inSlope: -0.7141979
+        outSlope: -0.7141979
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.33893093
+        outWeight: 0.1605406
       - serializedVersion: 3
-        time: 4.05
-        value: 90.75944
-        inSlope: -23.504715
-        outSlope: -23.504715
+        time: 6
+        value: -7.094574
+        inSlope: -21.957697
+        outSlope: -21.957697
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.28378245
+        inWeight: 0.1737194
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: Free Racing Car Blue Variant
+    path: Free Racing Car Purple Variant
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 9.322899
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 6
+        value: 9.322899
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalPosition.x
+    path: Free Racing Car Red Variant
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1.1825049
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 6
+        value: 1.1825049
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalPosition.y
+    path: Free Racing Car Red Variant
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 37.648956
+        inSlope: -16.786386
+        outSlope: -16.786386
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.15454179
+      - serializedVersion: 3
+        time: 2.1833334
+        value: 3.982655
+        inSlope: -0.9519649
+        outSlope: -0.9519649
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.14772455
+        outWeight: 0.4530771
+      - serializedVersion: 3
+        time: 2.9166667
+        value: 3.920393
+        inSlope: -0.030967666
+        outSlope: -0.030967666
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.12562443
+      - serializedVersion: 3
+        time: 6
+        value: -20.198448
+        inSlope: -14.807634
+        outSlope: -14.807634
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.098597504
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalPosition.z
+    path: Free Racing Car Red Variant
     classID: 4
     script: {fileID: 0}
     flags: 0
