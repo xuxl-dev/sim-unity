@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MockCar : MonoBehaviour
 {
+  public bool reverse_y = false;
   public string id = Guid.NewGuid().ToString();
   public string Name => $"CarAgent-{id}";
   Rigidbody rb;
@@ -20,7 +21,7 @@ public class MockCar : MonoBehaviour
         angular_speed = rb.angularVelocity.ToObject(),
         position = transform.position.ToObject(),
         rotation = transform.rotation.ToObject(),
-        reverse_y = false,
+        reverse_y,
         visibility = true,
         traffic_light = "<none>",
       };
