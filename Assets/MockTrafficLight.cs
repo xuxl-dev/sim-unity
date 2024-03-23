@@ -24,6 +24,7 @@ public class MockTrafficLight : MonoBehaviour
     var GetLightStatus = new Func<object>(() => new
     {
       status = Current_color,
+      time = 0,
     });
 
     PhyEnvReporter.Instance.Subscribe(new PhyEnvReporter.SubscriberConfig
