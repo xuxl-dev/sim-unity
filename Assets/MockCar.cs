@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MockCar : MonoBehaviour
@@ -11,18 +12,15 @@ public class MockCar : MonoBehaviour
     rb = GetComponent<Rigidbody>();
     Func<object> GetBriefFunc()
     {
-      // add 180 deg to Y rotation
-      var new_rotation = transform.rotation.eulerAngles;
-      new_rotation.y += 180;
-      
-
-      return () => new 
+      // rotate Y (this is quaternion rotation, not euler angle)
+      return () => new
       {
         speed = rb.velocity.magnitude,
         speed3 = rb.velocity.ToObject(),
         angular_speed = rb.angularVelocity.ToObject(),
         position = transform.position.ToObject(),
-        rotation = new_rotation.ToObject(),
+        rotation = transform.rotation.ToObject(),
+        reverse_y = false,
         visibility = true,
         traffic_light = "<none>",
       };
