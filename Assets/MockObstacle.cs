@@ -22,11 +22,12 @@ public class MockObstacle : MonoBehaviour
         position = transform.position.ToObject(),
         rotation = transform.rotation.ToObject(),
         visibility = true,
+        type = "person",
       };
     }
     PhyEnvReporter.Instance.Subscribe(new PhyEnvReporter.SubscriberConfig
     {
-      @event = "human",
+      @event = "person-status",
       data = GetBriefFunc(),
       id = Name,
     });
