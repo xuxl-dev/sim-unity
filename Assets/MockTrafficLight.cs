@@ -6,12 +6,14 @@ public class MockTrafficLight : MonoBehaviour
   public string id = Guid.NewGuid().ToString();
   public string Name => $"TrafficLight-{id}";
 
-  string Current_color {
-    get {
+  string Current_color
+  {
+    get
+    {
       var color = GetComponent<Renderer>().material;
-      if (color == red) return "red";
-      if (color == green) return "green";
-      if (color == yellow) return "yellow";
+      if (CompareTextureColor(color, red)) return "red";
+      if (CompareTextureColor(color, green)) return "green";
+      if (CompareTextureColor(color, yellow)) return "yellow";
       return "unknown";
     }
   }
@@ -23,7 +25,7 @@ public class MockTrafficLight : MonoBehaviour
   {
     var GetLightStatus = new Func<object>(() => new
     {
-      status = Current_color,
+      color = Current_color,
       time = 0,
     });
 
@@ -33,5 +35,12 @@ public class MockTrafficLight : MonoBehaviour
       data = GetLightStatus,
       id = Name,
     });
+  }
+
+  private bool CompareTextureColor(Material a, Material b, float tolerance = 0.1f)
+  {
+    return Math.Abs(a.color.r - b.color.r) < tolerance &&
+           Math.Abs(a.color.g - b.color.g) < tolerance &&
+           Math.Abs(a.color.b - b.color.b) < tolerance;
   }
 }
