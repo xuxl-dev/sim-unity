@@ -1254,7 +1254,7 @@ MonoBehaviour:
   - {r: 0.04830408, g: 1, b: 0, a: 0}
   - {r: 1, g: 0.94773996, b: 0, a: 0}
   m_GizmoYOffset: 0
-  m_ShowGizmos: 0
+  m_ShowGizmos: 1
   m_CompressionType: 1
   m_ObservationStacks: 1
 --- !u!1 &7147078483955408438

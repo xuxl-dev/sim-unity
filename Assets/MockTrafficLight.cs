@@ -10,23 +10,40 @@ public class MockTrafficLight : MonoBehaviour
   {
     get
     {
+      // return color_prompt switch
+      // {
+      //   Color.Red => "red",
+      //   Color.Green => "green",
+      //   Color.Yellow => "yellow",
+      //   _ => "unknown",
+      // };
       var color = GetComponent<Renderer>().material;
       if (CompareTextureColor(color, red)) return "red";
       if (CompareTextureColor(color, green)) return "green";
       if (CompareTextureColor(color, yellow)) return "yellow";
-      return "unknown";
+      return "yellow";
     }
   }
   public Material red;
   public Material green;
   public Material yellow;
-
+  public enum Color
+  {
+    Red,
+    Green,
+    Yellow,
+    Unknown,
+  }
+  public Color color_prompt = Color.Unknown;
+  public float seconds_left = 0;
   private void Start()
   {
     var GetLightStatus = new Func<object>(() => new
     {
       color = Current_color,
-      time = 0,
+      time = seconds_left,
+      position = transform.position.ToObject(),
+      id = Name,
     });
 
     PhyEnvReporter.Instance.Subscribe(new PhyEnvReporter.SubscriberConfig

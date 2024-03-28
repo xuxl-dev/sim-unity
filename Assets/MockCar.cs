@@ -16,8 +16,8 @@ public class MockCar : MonoBehaviour
       // rotate Y (this is quaternion rotation, not euler angle)
       return () => new
       {
-        speed = rb.velocity.magnitude,
-        speed3 = rb.velocity.ToObject(),
+        speed = this.speed.magnitude,
+        speed3 = this.speed.ToObject(),
         angular_speed = rb.angularVelocity.ToObject(),
         position = transform.position.ToObject(),
         rotation = transform.rotation.ToObject(),
@@ -32,5 +32,23 @@ public class MockCar : MonoBehaviour
       data = GetBriefFunc(),
       id = Name,
     });
+    previous_position = transform.position;
+  }
+
+  Vector3 previous_position;
+  Vector3 speed;
+  int interval = 0;
+  private void FixedUpdate()
+  {
+    if (interval++ % 5 != 0) return;
+    // calc speed
+    speed = (transform.position - previous_position) / Time.fixedDeltaTime / 1.8f;
+    if (speed.magnitude > 180f)
+    {
+      speed /= speed.magnitude;
+      speed *= 3f;
+    }
+
+    previous_position = transform.position;
   }
 }
