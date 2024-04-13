@@ -312,6 +312,7 @@ GameObject:
   m_Component:
   - component: {fileID: 497002462}
   - component: {fileID: 497002461}
+  - component: {fileID: 497002463}
   m_Layer: 0
   m_Name: Cars
   m_TagString: Untagged
@@ -358,6 +359,18 @@ Transform:
   - {fileID: 668306907}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &497002463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497002460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 935ae442328606f47ac8d3f513d7adba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &668306906
 GameObject:
   m_ObjectHideFlags: 0
@@ -480,6 +493,8 @@ MonoBehaviour:
   red: {fileID: 2100000, guid: 31d46e32ae365424ebeb5baba49d222c, type: 2}
   green: {fileID: 2100000, guid: f1b13cc926dfd3a46b41be0db52bc822, type: 2}
   yellow: {fileID: 2100000, guid: 6afcd49b7197ffe4284af020db7450d9, type: 2}
+  color_prompt: 3
+  seconds_left: 0
 --- !u!1 &694886148
 GameObject:
   m_ObjectHideFlags: 0
