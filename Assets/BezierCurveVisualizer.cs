@@ -1,7 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BezierCurveVisualizer : MonoBehaviour
 {
@@ -10,6 +9,7 @@ public class BezierCurveVisualizer : MonoBehaviour
     {
         public Transform pointA;
         public Transform pointB;
+        public Color _color;
     }
 
     [Header("Bezier Curve Points")]
@@ -58,7 +58,7 @@ public class BezierCurveVisualizer : MonoBehaviour
 
     List<GameObject> TempObjs = new();
     public Material TempMaterial;
-    LineRenderer GetTempLineRenderer()
+    LineRenderer GetTempLineRenderer(out Color _color)
     {
         // 创建一个新的GameObject并将其设为当前对象的子对象
         GameObject child = new GameObject();
@@ -80,6 +80,7 @@ public class BezierCurveVisualizer : MonoBehaviour
         // 使用 sharedMaterial 避免在编辑模式下生成材质实例
         Material newMaterial = new Material(renderer.sharedMaterial);
         var color = Random.ColorHSV();
+        _color = color;
         color.a = 0.8f;
         newMaterial.color = color;
 
@@ -106,7 +107,14 @@ public class BezierCurveVisualizer : MonoBehaviour
     {
         for (int i = 0; i < bPoints.Count; i++)
         {
-            UpdateCurve(bPoints[i].pointA, bPoints[i].pointB, i < TempObjs.Count ? TempObjs[i].GetComponent<LineRenderer>() : null);
+            if ( i < TempObjs.Count )
+            {
+                UpdateCurve(bPoints[i].pointA, bPoints[i].pointB, TempObjs[i].GetComponent<LineRenderer>());
+            } else {
+                var cached = GetTempLineRenderer(out var _color);
+                bPoints[i]._color = _color;
+                UpdateCurve(bPoints[i].pointA, bPoints[i].pointB, cached);
+            }
         }
     }
 
@@ -140,10 +148,9 @@ public class BezierCurveVisualizer : MonoBehaviour
         runningAnis.RemoveAll(ani => ani.t > ani.segements);
     }
 
-    void UpdateCurve(Transform pointA, Transform pointB, LineRenderer cached = null)
+    void UpdateCurve(Transform pointA, Transform pointB, LineRenderer cached)
     {
-        var lineRenderer = cached ?? GetTempLineRenderer();
-
+        var lineRenderer = cached;
         Vector3 controlPoint = (pointA.position + pointB.position) / 2 + Vector3.up * height
             + relHeight * Vector3.Distance(pointA.position, pointB.position) * Vector3.up;
 
@@ -206,6 +213,12 @@ public class BezierCurveVisualizer : MonoBehaviour
 
     public void BeginAnimation(int id)
     {
+        // check if already running
+        if (runningAnis.Exists(ani => ani.proto.id == id))
+        {
+            return;
+        }
+
         var cfg = bPoints[id];
         RunningAnimation ani = new()
         {
@@ -217,6 +230,14 @@ public class BezierCurveVisualizer : MonoBehaviour
             proto = animations[id],
         };
         ani.target.gameObject.SetActive(true);
+        if (animations[id].animation.gameObject.TryGetComponent<Image>(out var img))
+        {
+            Debug.Log($"Set color to {cfg._color}");
+            // set image color to the same as line renderer
+            img.color = cfg._color;
+        }
+
+
         runningAnis.Add(ani);
     }
 
