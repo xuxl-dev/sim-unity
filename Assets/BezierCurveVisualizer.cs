@@ -20,10 +20,13 @@ public class BezierCurveVisualizer : MonoBehaviour
     {
         public int id;
         public Transform animation;
+        public int segements = 80;
+        public bool loop = false;
     }
 
     class RunningAnimation
     {
+        public Animation proto;
         public Transform from;
         public Transform to;
         public int t;
@@ -122,7 +125,16 @@ public class BezierCurveVisualizer : MonoBehaviour
 
         foreach (var animation in runningAnis.FindAll(ani => ani.t > ani.segements))
         {
-            animation.target.gameObject.SetActive(false);
+
+            if (animation.proto.loop)
+            {
+                animation.t = 0; // reset
+                animation.target.gameObject.SetActive(true);
+            }
+            else
+            {
+                animation.target.gameObject.SetActive(false);
+            }
         }
 
         runningAnis.RemoveAll(ani => ani.t > ani.segements);
@@ -192,16 +204,17 @@ public class BezierCurveVisualizer : MonoBehaviour
     //     }
     // }
 
-    public void AddAni(int id)
+    public void BeginAnimation(int id)
     {
         var cfg = bPoints[id];
         RunningAnimation ani = new()
         {
             from = cfg.pointA,
             to = cfg.pointB,
-            segements = 100,
+            segements = animations[id].segements,
             t = 0,
             target = animations[id].animation,
+            proto = animations[id],
         };
         ani.target.gameObject.SetActive(true);
         runningAnis.Add(ani);
@@ -210,6 +223,6 @@ public class BezierCurveVisualizer : MonoBehaviour
     [ContextMenu("Ani0")]
     public void TestAnimation()
     {
-        AddAni(0);
+        BeginAnimation(0);
     }
 }
